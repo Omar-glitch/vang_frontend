@@ -1,0 +1,50 @@
+<section>
+  @if (isLoggedIn) {
+    <p>{{username}}</p>
+  } @else {
+    <p>No estas registrado</p>
+  }
+  <button (click)="isLoggedIn = !isLoggedIn">Putin</button>
+  <ul>
+    @for (game of games; track game.name) {
+      <li (click)="greet(game.name)">
+        <app-game [gameInfo]="game" (addFavGameEvent)="getFavorite($event)" />
+      </li>
+    }
+  </ul>
+
+  @if (favGame) {
+    <p>{{ favGame }}</p>
+  }
+
+  @defer (on viewport) {
+    <p>as</p>
+  } @placeholder {
+    <p>asd</p>
+  } @loading (minimum 1s) {
+    <p>cargando...</p>
+  } @error {
+    <p>error</p>
+  }
+</section>
+
+<!-- import { NgOptimizedImage } from '@angular/common';
+@Component({
+  standalone: true,
+  template: `
+    ...
+    <li>
+      Static Image:
+      <img ngSrc="/assets/logo.svg" alt="Angular logo" width="32" height="32" />
+    </li>
+    <li>
+      Dynamic Image:
+      <img [ngSrc]="logoUrl" [alt]="logoAlt" width="32" height="32" />
+    </li>`,
+    ...
+  `,
+  imports: [NgOptimizedImage],
+}) 
+fill
+<img ngSrc="www.example.com/image.png" height="600" width="800" priority />
+-->

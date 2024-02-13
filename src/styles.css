@@ -1,1 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* You can add global styles to this file, and also import other style files */
+/* *,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+/* body { */
+/* @apply bg-black text-white;
+} */
+
+/* :root {
+  color-scheme: light dark;
+  --white: #ffffff;
+  --black: #000000;
+  --max-width: 75rem;
+  --min-width: 17.5rem;
+  --transition: 0.4s;
+  --appbar-height: 3.4375rem;
+  --modal-count: 0;
+  --header-z-index: 9;
+  --portal-z-index: 10;
+} */
+
+/* .light-theme {
+  --primary: #2f66d3;
+  --primary-dark: #2c46b3;
+  --primary-light: #67b8ff;
+  --text: #151618;
+  --text-secondary: #605959;
+  --paper: #f9f9f9;
+  --paper-secondary: #c3c3c3;
+  --success: #4caf50;
+  --info: #03a9f4;
+  --warning: #ff9800;
+  --error: #ef5350;
+  --shadow: #d5d5d5;
+  --success-light: #a5d6a7;
+  --success-dark: #388e3b;
+  --info-light: #81d3fa;
+  --info-dark: #0487d1;
+  --warning-light: #ffcd80;
+  --warning-dark: #f57d00;
+  --error-light: #ef9a9a;
+  --error-dark: #e53835;
+  --primary-channel: 47, 102, 211;
+  --primary-dark-channel: 44, 70, 179;
+  --text-channel: 21, 22, 24;
+  --primary-light-channel: 103, 184, 255;
+  --text-secondary-channel: 96, 89, 89;
+  --paper-channel: 249, 249, 249;
+  --paper-secondary-channel: 195, 195, 195;
+  --success-channel: 76, 175, 80;
+  --info-channel: 3, 169, 244;
+  --warning-channel: 255, 152, 0;
+  --error-channel: 239, 83, 80;
+  --shadow-channel: 213, 213, 213;
+  --color-sheme: light;
+}
+
+.dark-theme {
+  --primary: #67b8ff;
+  --primary-dark: #2f99ff;
+  --primary-light: #bddfff;
+  --text: #f9f9f9;
+  --text-secondary: #9c9c9c;
+  --paper: #151618;
+  --paper-secondary: #474747;
+  --success: #7fe282;
+  --info: #75cbf3;
+  --warning: #ffc36a;
+  --error: #ff8b89;
+  --shadow: #3d3a3a;
+  --success-light: #caf2ca;
+  --success-dark: #36c040;
+  --info-light: #ade0f8;
+  --info-dark: #00a8ea;
+  --warning-light: #ffdba6;
+  --warning-dark: #fb9900;
+  --error-light: #ffc5ca;
+  --error-dark: #f45c5d;
+  --primary-channel: 103, 184, 255;
+  --primary-dark-channel: 47, 153, 255;
+  --primary-light-channel: 189, 223, 255;
+  --text-channel: 249, 249, 249;
+  --text-secondary-channel: 156, 156, 156;
+  --paper-channel: 21, 22, 24;
+  --paper-secondary-channel: 71, 71, 71;
+  --success-channel: 127, 226, 130;
+  --info-channel: 117, 203, 243;
+  --warning-channel: 255, 195, 106;
+  --error-channel: 255, 139, 137;
+  --shadow-channel: 61, 58, 58;
+  --color-scheme: dark;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+::-webkit-calendar-picker-indicator {
+  color-scheme: var(--color-scheme);
+  opacity: 0;
+}
+
+select {
+  color-scheme: var(--color-scheme);
+}
+
+option {
+  background-color: var(--paper);
+}
+
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--primary) !important;
+}
+
+textarea {
+  resize: none;
+}
+
+#portal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
