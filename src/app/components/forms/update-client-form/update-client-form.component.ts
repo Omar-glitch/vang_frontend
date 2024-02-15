@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import axios from 'axios';
 import { stringValidator } from '../../../utils/validators';
@@ -27,6 +27,13 @@ export class UpdateClientFormComponent {
       stringValidator({ minLength: 4, maxLength: 32 }),
     ]),
   });
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['formValues']) {
+      const f = changes['formValues'].currentValue as ClientModel;
+      this.updateClientForm.setValue({ name: f.name, contact: f.contact });
+    }
+  }
 
   // fieldError = (field: string) => {
   //   return hasError(field, this.newClientForm);
