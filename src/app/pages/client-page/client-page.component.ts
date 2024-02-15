@@ -7,6 +7,8 @@ import { CreateClientFormComponent } from '../../components/forms/create-client-
 import { UpdateClientFormComponent } from '../../components/forms/update-client-form/update-client-form.component';
 import { BACKEND_URL } from '../../utils/constants';
 import { NgOptimizedImage } from '@angular/common';
+import { HotToastService } from '@ngneat/hot-toast';
+import getErrorMessage from '../../utils/errors';
 
 @Component({
   selector: 'app-client-page',
@@ -31,12 +33,18 @@ export class ClientPageComponent {
   updateClientFormId = 'updateClientFormId';
   loading = true;
 
+  constructor(private toast: HotToastService) {}
+
+  refreshPage = () => {
+    this.getClients();
+  };
+
   getClients = async () => {
     try {
       const clients = await axios.get(`${BACKEND_URL}/clients`);
       this.clients = clients.data;
       this.loading = false;
-      refreshFlowbite(1000);
+      refreshFlowbite(250);
     } catch (e) {
       console.log(e);
     }
@@ -50,10 +58,10 @@ export class ClientPageComponent {
     const confirmed = confirm('¿Estas seguro de eliminar este cliente?');
     if (!confirmed) return;
     try {
-      const deletedClient = await axios.delete(`${BACKEND_URL}/clients/${id}`);
-      console.log(deletedClient);
+      await axios.delete(`${BACKEND_URL}/clients/${id}`);
+      this.toast.success('Cliente eliminado');
     } catch (e) {
-      console.log(e);
+      this.toast.error(getErrorMessage(e));
     }
   };
 
