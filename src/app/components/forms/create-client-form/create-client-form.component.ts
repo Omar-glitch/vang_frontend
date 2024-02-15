@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { hasError, stringValidator } from '../../../utils/validators';
 import axios from 'axios';
+import { clickCloseBtnModal } from '../../../utils/closeModal';
+import { HotToastService } from '@ngneat/hot-toast';
+import getErrorMessage from '../../../utils/errors';
 
 @Component({
   selector: 'app-create-client-form',
@@ -12,6 +15,10 @@ import axios from 'axios';
 })
 export class CreateClientFormComponent {
   @Input({ required: true }) formId = '';
+  btnCloseModalId = `${this.formId}-close-btn2`;
+  sendingForm = false;
+
+  constructor(private toast: HotToastService) {}
 
   newClientForm = new FormGroup({
     name: new FormControl('', [
@@ -42,14 +49,18 @@ export class CreateClientFormComponent {
   // };
 
   onSubmit = async () => {
+    this.sendingForm = true;
     try {
-      const postClient = await axios.post(
+      await axios.post(
         'http://localhost:3000/clients',
         this.newClientForm.value
       );
-      console.log(postClient.data);
+      this.toast.success('Cliente añadido');
+      clickCloseBtnModal(this.btnCloseModalId);
+      this.newClientForm.reset();
     } catch (e) {
-      console.log(e);
+      this.toast.error(getErrorMessage(e));
     }
+    this.sendingForm = false;
   };
 }
