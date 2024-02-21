@@ -24,17 +24,23 @@ export function stringValidator({
     const val = control.value.trim();
     if (val.length < minLength)
       return {
-        stringValidator: { value: control.value, message: 'Min length' },
+        stringValidator: {
+          value: control.value,
+          message: `Mínimo ${minLength} letras`,
+        },
       };
     if (val.length > maxLength)
       return {
-        stringValidator: { value: control.value, message: 'max length' },
+        stringValidator: {
+          value: control.value,
+          message: `Máximo ${maxLength} letras`,
+        },
       };
     return null;
   };
 }
 
-export const hasError = (field: string, form: FormGroup) => {
+export const errorOf = (field: string, form: FormGroup) => {
   const fieldValue = form.get(field);
   if (!fieldValue) return '';
   if (fieldValue.errors)

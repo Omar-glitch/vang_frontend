@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { hasError, stringValidator } from '../../../utils/validators';
+import { errorOf, stringValidator } from '../../../utils/validators';
 import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -15,10 +15,8 @@ import getErrorMessage from '../../../utils/errors';
 })
 export class CreateClientFormComponent {
   @Input({ required: true }) formId = '';
-  btnCloseModalId = `${this.formId}-close-btn2`;
+  btnCloseModalId = '';
   sendingForm = false;
-
-  constructor(private toast: HotToastService) {}
 
   newClientForm = new FormGroup({
     name: new FormControl('', [
@@ -29,24 +27,17 @@ export class CreateClientFormComponent {
     ]),
   });
 
-  // fieldError = (field: string) => {
-  //   return hasError(field, this.newClientForm);
-  // };
+  constructor(private toast: HotToastService) {}
 
-  // hasError = (field: string) => {
-  //   const fieldValue = this.newClientForm.get(field);
-  //   if (!fieldValue) return '';
-  //   if (fieldValue.errors)
-  //     return fieldValue.errors['stringValidator'].message as string;
-  //   return '';
-  // };
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['formId']) {
+      this.btnCloseModalId = `${this.formId}-close-btn`;
+    }
+  }
 
-  // showErrors = () => {
-  //   const field = this.newClientForm.get('name');
-  //   console.log(field?.errors);
-  //   console.log(this.newClientForm.errors);
-
-  // };
+  showError = (field: string) => {
+    return errorOf(field, this.newClientForm);
+  };
 
   onSubmit = async () => {
     this.sendingForm = true;
