@@ -9,6 +9,8 @@ import { BACKEND_URL } from '../../utils/constants';
 import { NgOptimizedImage } from '@angular/common';
 import { HotToastService } from '@ngneat/hot-toast';
 import getErrorMessage from '../../utils/errors';
+import copy from 'copy-to-clipboard';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-client-page',
@@ -35,6 +37,11 @@ export class ClientPageComponent {
 
   constructor(private toast: HotToastService) {}
 
+  copyText = (str: string) => {
+    copy(str);
+    this.toast.success('Copiado!');
+  };
+
   refreshPage = () => {
     this.getClients();
   };
@@ -46,7 +53,7 @@ export class ClientPageComponent {
       this.loading = false;
       refreshFlowbite(250);
     } catch (e) {
-      console.log(e);
+      this.toast.error(getErrorMessage(e));
     }
   };
 

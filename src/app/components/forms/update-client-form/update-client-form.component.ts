@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import axios from 'axios';
-import { stringValidator } from '../../../utils/validators';
+import { errorOf, stringValidator } from '../../../utils/validators';
 import { ClientModel } from '../../../../models/ClientModel';
 import { Modal } from 'flowbite';
 import deepEqual from 'deep-equal';
@@ -32,7 +32,9 @@ export class UpdateClientFormComponent {
     ]),
   });
   prevForm = this.updateClientForm.value;
-  btnCloseModalId = `${this.formId}-close-btn`;
+  btnCloseModalId = '';
+
+  constructor(private toast: HotToastService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
@@ -40,28 +42,14 @@ export class UpdateClientFormComponent {
       this.updateClientForm.setValue({ name: f.name, contact: f.contact });
       this.prevForm = this.updateClientForm.value;
     }
+    if (changes['formId']) {
+      this.btnCloseModalId = `${this.formId}-close-btn`;
+    }
   }
 
-  constructor(private toast: HotToastService) {}
-
-  // fieldError = (field: string) => {
-  //   return hasError(field, this.newClientForm);
-  // };
-
-  // hasError = (field: string) => {
-  //   const fieldValue = this.newClientForm.get(field);
-  //   if (!fieldValue) return '';
-  //   if (fieldValue.errors)
-  //     return fieldValue.errors['stringValidator'].message as string;
-  //   return '';
-  // };
-
-  // showErrors = () => {
-  //   const field = this.newClientForm.get('name');
-  //   console.log(field?.errors);
-  //   console.log(this.newClientForm.errors);
-
-  // };
+  showError = (field: string) => {
+    return errorOf(field, this.updateClientForm);
+  };
 
   onSubmit = async () => {
     if (deepEqual(this.updateClientForm.value, this.prevForm)) {
