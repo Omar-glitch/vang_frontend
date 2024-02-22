@@ -5,6 +5,7 @@ import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import { HotToastService } from '@ngneat/hot-toast';
 import getErrorMessage from '../../../utils/errors';
+import { BACKEND_URL } from '../../../utils/constants';
 
 @Component({
   selector: 'app-create-client-form',
@@ -42,10 +43,7 @@ export class CreateClientFormComponent {
   onSubmit = async () => {
     this.sendingForm = true;
     try {
-      await axios.post(
-        'http://localhost:3000/clients',
-        this.newClientForm.value
-      );
+      await axios.post(`${BACKEND_URL}/clients`, this.newClientForm.value);
       this.toast.success('Cliente añadido');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newClientForm.reset();

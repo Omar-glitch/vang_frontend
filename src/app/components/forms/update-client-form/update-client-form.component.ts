@@ -3,11 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import axios from 'axios';
 import { errorOf, stringValidator } from '../../../utils/validators';
 import { ClientModel } from '../../../../models/ClientModel';
-import { Modal } from 'flowbite';
 import deepEqual from 'deep-equal';
 import { HotToastService } from '@ngneat/hot-toast';
 import getErrorMessage from '../../../utils/errors';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
+import { BACKEND_URL } from '../../../utils/constants';
 
 @Component({
   selector: 'app-update-client-form',
@@ -58,7 +58,7 @@ export class UpdateClientFormComponent {
     }
     try {
       await axios.put(
-        `http://localhost:3000/clients/${this.formValues._id}`,
+        `${BACKEND_URL}/clients/${this.formValues._id}`,
         this.updateClientForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);

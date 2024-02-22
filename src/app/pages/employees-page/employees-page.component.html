@@ -44,6 +44,8 @@
           <button
             type="button"
             class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            attr.data-modal-target="{{ createEmployeeFormId }}"
+            attr.data-modal-toggle="{{ createEmployeeFormId }}"
           >
             <svg
               class="h-5 w-5 mr-2"
@@ -62,50 +64,31 @@
           </button>
           <div class="flex items-center space-x-3 w-full md:w-auto">
             <button
-              id="actionsDropdownButton"
-              data-dropdown-toggle="actionsDropdown"
-              class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              type="button"
+              title="Recargar"
+              (click)="refreshPage()"
+              class="flex items-center justify-center p-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg toggle-mobile-view hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-800 focus:outline-none dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             >
-              <svg
-                class="-ml-1 mr-1.5 w-5 h-5"
+              <span class="sr-only">Refrescar</span
+              ><svg
+                stroke="currentColor"
                 fill="currentColor"
-                viewbox="0 0 20 20"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                class="w-5 h-5"
                 xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
               >
                 <path
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                />
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-miterlimit="10"
+                  stroke-width="32"
+                  d="m400 148-21.12-24.57A191.43 191.43 0 0 0 240 64C134 64 48 150 48 256s86 192 192 192a192.09 192.09 0 0 0 181.07-128"
+                ></path>
+                <path
+                  d="M464 97.42V208a16 16 0 0 1-16 16H337.42c-14.26 0-21.4-17.23-11.32-27.31L436.69 86.1C446.77 76 464 83.16 464 97.42z"
+                ></path>
               </svg>
-              Actions
             </button>
-            <div
-              id="actionsDropdown"
-              class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-            >
-              <ul
-                class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="actionsDropdownButton"
-              >
-                <li>
-                  <a
-                    href="#"
-                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Mass Edit</a
-                  >
-                </li>
-              </ul>
-              <div class="py-1">
-                <a
-                  href="#"
-                  class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >Delete all</a
-                >
-              </div>
-            </div>
             <button
               id="filterDropdownButton"
               data-dropdown-toggle="filterDropdown"
@@ -224,6 +207,45 @@
         </div>
       </div>
       <div class="overflow-x-auto">
+        @if (loading) {
+        <div role="status">
+          <svg
+            aria-hidden="true"
+            class="w-10 h-10 my-8 mx-auto text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+          <p class="mx-auto mb-8 w-80 text-center text-gray-200">
+            Cargando empleados...
+          </p>
+        </div>
+        } @if (!employees.length && !loading) {
+        <div class="w-full flex flex-col justify-center items-center">
+          <div class="w-72 h-72 relative">
+            <img
+              alt="not-found"
+              ngSrc="/assets/notFound.svg"
+              sizes="60vw"
+              fill
+            />
+          </div>
+          <p
+            class="mb-6 w-4/5 text-center text-lg text-gray-500 dark:text-gray-300"
+          >
+            No hay empleados
+          </p>
+        </div>
+        } @if (employees.length) {
         <table
           class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
@@ -231,6 +253,7 @@
             class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
           >
             <tr>
+              <th scope="col" class="px-4 py-3">ID</th>
               <th scope="col" class="px-4 py-3">Nombre</th>
               <th scope="col" class="px-4 py-3">Edad</th>
               <th scope="col" class="px-4 py-3">Rol</th>
@@ -243,21 +266,24 @@
             </tr>
           </thead>
           <tbody>
+            @for (employee of employees; track employee._id) {
             <tr class="border-b dark:border-gray-700">
               <th
                 scope="row"
                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
-                Apple iMac 27&#34;
+                {{ employee._id }}
               </th>
-              <td class="px-4 py-3">PC</td>
-              <td class="px-4 py-3">Apple</td>
-              <td class="px-4 py-3">300</td>
-              <td class="px-4 py-3">$2999</td>
+              <td class="px-4 py-3">{{ employee.name }}</td>
+              <td class="px-4 py-3">{{ employee.age }}</td>
+              <td class="px-4 py-3">{{ employee.role }}</td>
+              <td class="px-4 py-3">{{ employee.email }}</td>
+              <td class="px-4 py-3">{{ employee.phone }}</td>
+              <td class="px-4 py-3">{{ employee.direction }}</td>
               <td class="px-4 py-3 flex items-center justify-end">
                 <button
-                  id="apple-imac-27-dropdown-button"
-                  data-dropdown-toggle="apple-imac-27-dropdown"
+                  id="{{ employee._id }}-button"
+                  attr.data-dropdown-toggle="{{ employee._id }}-dropdown"
                   class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                   type="button"
                 >
@@ -274,607 +300,47 @@
                   </svg>
                 </button>
                 <div
-                  id="apple-imac-27-dropdown"
+                  id="{{ employee._id }}-dropdown"
                   class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                 >
                   <ul
                     class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="apple-imac-27-dropdown-button"
+                    attr.aria-labelledby="{{ employee._id }}-button"
                   >
                     <li>
                       <a
                         href="#"
                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
+                        >Ver reparaciones</a
                       >
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
+                      <button
+                        class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        (click)="setEditEmployeeValues(employee)"
+                        attr.data-modal-target="{{ updateEmployeeFormId }}"
+                        attr.data-modal-show="{{ updateEmployeeFormId }}"
                       >
+                        Editar
+                      </button>
                     </li>
                   </ul>
                   <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
+                    <button
+                      type="button"
+                      (click)="deleteEmployee(employee._id)"
+                      class="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
+                      Eliminar
+                    </button>
                   </div>
                 </div>
               </td>
             </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple iMac 20&#34;
-              </th>
-              <td class="px-4 py-3">PC</td>
-              <td class="px-4 py-3">Apple</td>
-              <td class="px-4 py-3">200</td>
-              <td class="px-4 py-3">$1499</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="apple-imac-20-dropdown-button"
-                  data-dropdown-toggle="apple-imac-20-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="apple-imac-20-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="apple-imac-20-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple iPhone 14
-              </th>
-              <td class="px-4 py-3">Phone</td>
-              <td class="px-4 py-3">Apple</td>
-              <td class="px-4 py-3">1237</td>
-              <td class="px-4 py-3">$999</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="apple-iphone-14-dropdown-button"
-                  data-dropdown-toggle="apple-iphone-14-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="apple-iphone-14-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="apple-iphone-14-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple iPad Air
-              </th>
-              <td class="px-4 py-3">Tablet</td>
-              <td class="px-4 py-3">Apple</td>
-              <td class="px-4 py-3">4578</td>
-              <td class="px-4 py-3">$1199</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="apple-ipad-air-dropdown-button"
-                  data-dropdown-toggle="apple-ipad-air-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="apple-ipad-air-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="apple-ipad-air-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Xbox Series S
-              </th>
-              <td class="px-4 py-3">Gaming/Console</td>
-              <td class="px-4 py-3">Microsoft</td>
-              <td class="px-4 py-3">56</td>
-              <td class="px-4 py-3">$299</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="xbox-series-s-dropdown-button"
-                  data-dropdown-toggle="xbox-series-s-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="xbox-series-s-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="xbox-series-s-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                PlayStation 5
-              </th>
-              <td class="px-4 py-3">Gaming/Console</td>
-              <td class="px-4 py-3">Sony</td>
-              <td class="px-4 py-3">78</td>
-              <td class="px-4 py-3">$799</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="playstation-5-dropdown-button"
-                  data-dropdown-toggle="playstation-5-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="playstation-5-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="playstation-5-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Xbox Series X
-              </th>
-              <td class="px-4 py-3">Gaming/Console</td>
-              <td class="px-4 py-3">Microsoft</td>
-              <td class="px-4 py-3">200</td>
-              <td class="px-4 py-3">$699</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="xbox-series-x-dropdown-button"
-                  data-dropdown-toggle="xbox-series-x-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="xbox-series-x-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="xbox-series-x-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple Watch SE
-              </th>
-              <td class="px-4 py-3">Watch</td>
-              <td class="px-4 py-3">Apple</td>
-              <td class="px-4 py-3">657</td>
-              <td class="px-4 py-3">$399</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="apple-watch-se-dropdown-button"
-                  data-dropdown-toggle="apple-watch-se-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="apple-watch-se-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="apple-watch-se-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                NIKON D850
-              </th>
-              <td class="px-4 py-3">Photo</td>
-              <td class="px-4 py-3">Nikon</td>
-              <td class="px-4 py-3">465</td>
-              <td class="px-4 py-3">$599</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="nikon-d850-dropdown-button"
-                  data-dropdown-toggle="nikon-d850-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="nikon-d850-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="nikon-d850-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr class="border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Monitor BenQ EX2710Q
-              </th>
-              <td class="px-4 py-3">TV/Monitor</td>
-              <td class="px-4 py-3">BenQ</td>
-              <td class="px-4 py-3">354</td>
-              <td class="px-4 py-3">$499</td>
-              <td class="px-4 py-3 flex items-center justify-end">
-                <button
-                  id="benq-ex2710q-dropdown-button"
-                  data-dropdown-toggle="benq-ex2710q-dropdown"
-                  class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-                <div
-                  id="benq-ex2710q-dropdown"
-                  class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                >
-                  <ul
-                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="benq-ex2710q-dropdown-button"
-                  >
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Show</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >Edit</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="py-1">
-                    <a
-                      href="#"
-                      class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </div>
-                </div>
-              </td>
-            </tr>
+            }
           </tbody>
         </table>
+        }
       </div>
       <nav
         class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
@@ -970,3 +436,9 @@
     </div>
   </div>
 </section>
+
+<app-create-employee-form [formId]="createEmployeeFormId" />
+<app-update-employee-form
+  [formId]="updateEmployeeFormId"
+  [formValues]="employeeUpdateFormValues"
+/>
