@@ -20,7 +20,5 @@ export const routes: Routes = [
     title: 'Empleados | Reps',
     component: EmployeesPageComponent,
   },
-  // { path: 'edit/:postId',
-  // component: PostCreateComponent },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
