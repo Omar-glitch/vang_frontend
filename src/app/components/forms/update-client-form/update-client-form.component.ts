@@ -31,8 +31,10 @@ export class UpdateClientFormComponent {
       stringValidator({ minLength: 4, maxLength: 32 }),
     ]),
   });
+  @Input() onSuccessSubmit?: () => void;
   prevForm = this.updateClientForm.value;
   btnCloseModalId = '';
+  sendingForm = false;
 
   constructor(private toast: HotToastService) {}
 
@@ -56,15 +58,18 @@ export class UpdateClientFormComponent {
       this.toast.error('No hay nada que actualizar');
       return;
     }
+    this.sendingForm = true;
     try {
       await axios.put(
         `${BACKEND_URL}/clients/${this.formValues._id}`,
         this.updateClientForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);
+      if (this.onSuccessSubmit) this.onSuccessSubmit();
       this.toast.success('Cliente actualizado');
     } catch (e) {
       this.toast.error(getErrorMessage(e));
     }
+    this.sendingForm = false;
   };
 }

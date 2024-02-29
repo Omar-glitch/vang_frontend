@@ -31,6 +31,7 @@ export class UpdateEmployeeFormComponent {
     phone: '',
     role: '',
   };
+  @Input() onSuccessSubmit?: () => void;
   updateEmployeeForm = new FormGroup({
     name: new FormControl(this.formValues.name, [
       stringValidator({ minLength: 3, maxLength: 32 }),
@@ -100,6 +101,7 @@ export class UpdateEmployeeFormComponent {
         this.updateEmployeeForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);
+      if (this.onSuccessSubmit) this.onSuccessSubmit();
       this.toast.success('Cliente actualizado');
     } catch (e) {
       this.toast.error(getErrorMessage(e));

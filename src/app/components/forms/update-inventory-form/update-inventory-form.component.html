@@ -16,7 +16,7 @@
         class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600"
       >
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Actualizar empleado
+          Actualizar inventario
         </h3>
         <button
           type="button"
@@ -41,7 +41,7 @@
         </button>
       </div>
       <!-- Modal body -->
-      <form [formGroup]="updateEmployeeForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="updateInventoryForm" (ngSubmit)="onSubmit()">
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
           <div>
             <label
@@ -61,90 +61,81 @@
           </div>
           <div>
             <label
-              for="age"
+              for="stock"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Edad</label
+              >Stock</label
             >
             <input
               type="number"
-              formControlName="age"
-              id="age"
+              formControlName="stock"
+              id="stock"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Edad"
+              placeholder="Stock/Cantidads"
               required=""
             />
-            <p class="text-xs dark:text-white">{{ showError("age") }}</p>
+            <p class="text-xs dark:text-white">{{ showError("stock") }}</p>
           </div>
           <div>
             <label
-              for="phone"
+              for="description"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Tel</label
+              >Descripción</label
             >
             <input
               type="string"
-              formControlName="phone"
-              id="phone"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="4589-3265"
-              required=""
-            />
-            <p class="text-xs dark:text-white">{{ showError("phone") }}</p>
-          </div>
-          <div>
-            <label
-              for="email"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Email</label
-            >
-            <input
-              type="email"
-              formControlName="email"
-              id="email"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Email"
-              required=""
-            />
-            <p class="text-xs dark:text-white">{{ showError("email") }}</p>
-          </div>
-          <div>
-            <label
-              for="role"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Rol</label
-            >
-            <select
-              id="role"
-              formControlName="role"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            >
-              <option selected="" ngValue="admin">Admin</option>
-              <option ngValue="user">Usuario</option>
-              <option ngValue="reparador">Reparador</option>
-              <option ngValue="finanzas">Finanzas</option>
-            </select>
-            <p class="text-xs dark:text-white">{{ showError("role") }}</p>
-          </div>
-          <div>
-            <label
-              for="direction"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Dirección</label
-            >
-            <input
-              type="text"
-              formControlName="direction"
-              id="direction"
+              formControlName="description"
+              id="description"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="Descripción"
               required=""
             />
-            <p class="text-xs dark:text-white">{{ showError("direction") }}</p>
+            <p class="text-xs dark:text-white">
+              {{ showError("description") }}
+            </p>
+          </div>
+          <div>
+            <label
+              for="min"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Cantidad mínima</label
+            >
+            <input
+              type="number"
+              formControlName="min"
+              id="min"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Cantidad mínima"
+              required=""
+            />
+            <p class="text-xs dark:text-white">{{ showError("min") }}</p>
+          </div>
+          <div>
+            <label
+              for="type"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Tipo</label
+            >
+            <select
+              id="type"
+              formControlName="type"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            >
+              <option selected="" ngValue="batería">Batería</option>
+              <option ngValue="centro de carga">Centro de carga</option>
+              <option ngValue="pantalla">Pantalla</option>
+              <option ngValue="tapa trasera">Tapa trasera</option>
+              <option ngValue="micrófono">Micrófono</option>
+              <option ngValue="placa madre">Placa madre</option>
+              <option ngValue="circuitos integrados">
+                Circuitos integrados
+              </option>
+            </select>
+            <p class="text-xs dark:text-white">{{ showError("type") }}</p>
           </div>
         </div>
         <button
           type="submit"
-          [disabled]="!updateEmployeeForm.valid || sendingForm"
+          [disabled]="!updateInventoryForm.valid || sendingForm"
           class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
         >
           @if (sendingForm) {
@@ -178,7 +169,7 @@
               clip-rule="evenodd"
             ></path>
           </svg>
-          Actualizar empleado}
+          Actualizar inventario}
         </button>
       </form>
     </div>
