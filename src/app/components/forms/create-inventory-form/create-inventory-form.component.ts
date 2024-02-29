@@ -12,50 +12,42 @@ import getErrorMessage from '../../../utils/errors';
 import { BACKEND_URL } from '../../../utils/constants';
 
 @Component({
-  selector: 'app-create-employee-form',
+  selector: 'app-create-inventory-form',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl: './create-employee-form.component.html',
-  styleUrl: './create-employee-form.component.css',
+  templateUrl: './create-inventory-form.component.html',
+  styleUrl: './create-inventory-form.component.css',
 })
-export class CreateEmployeeFormComponent {
-  @Input({ required: true }) formId = '';
+export class CreateInventoryFormComponent {
+  @Input({ required: true }) formId!: string;
+  @Input() onSuccessSubmit?: () => void;
   btnCloseModalId = '';
   sendingForm = false;
-  @Input() onSuccessSubmit?: () => void;
 
-  newEmployeeForm = new FormGroup({
+  newInventoryForm = new FormGroup({
     name: new FormControl('', [
       stringValidator({ minLength: 3, maxLength: 32 }),
     ]),
-    age: new FormControl(25, [numberValidator({ min: 16, max: 80 })]),
-    role: new FormControl('admin', [
+    description: new FormControl('', [
+      stringValidator({ minLength: 8, maxLength: 54 }),
+    ]),
+    type: new FormControl('batería', [
       stringValidator({
-        minLength: 4,
+        minLength: 1,
         maxLength: 32,
-        list: ['reparador', 'finanzas', 'admin', 'user'],
+        list: [
+          'batería',
+          'centro de carga',
+          'pantalla',
+          'tapa trasera',
+          'micrófono',
+          'placa madre',
+          'circuitos integrados',
+        ],
       }),
     ]),
-    direction: new FormControl('', [
-      stringValidator({ minLength: 6, maxLength: 100 }),
-    ]),
-    email: new FormControl('', [
-      stringValidator({
-        minLength: 8,
-        maxLength: 54,
-        regex: {
-          value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-          message: 'Ej. omar@gmail.com',
-        },
-      }),
-    ]),
-    phone: new FormControl('', [
-      stringValidator({
-        minLength: 4,
-        maxLength: 32,
-        regex: { value: /^\d{4}-\d{4}$/, message: 'Ej. 6589-4578' },
-      }),
-    ]),
+    stock: new FormControl(0, [numberValidator({ min: 1, max: 2_500 })]),
+    min: new FormControl(0, [numberValidator({ min: 0, max: 2_500 })]),
   });
 
   constructor(private toast: HotToastService) {}
@@ -67,16 +59,19 @@ export class CreateEmployeeFormComponent {
   }
 
   showError = (field: string) => {
-    return errorOf(field, this.newEmployeeForm);
+    return errorOf(field, this.newInventoryForm);
   };
 
   onSubmit = async () => {
     this.sendingForm = true;
     try {
-      await axios.post(`${BACKEND_URL}/employees`, this.newEmployeeForm.value);
-      this.toast.success('Empleado añadido');
+      await axios.post(
+        `${BACKEND_URL}/inventories`,
+        this.newInventoryForm.value
+      );
+      this.toast.success('Inventario añadido');
       clickCloseBtnModal(this.btnCloseModalId);
-      this.newEmployeeForm.reset();
+      this.newInventoryForm.reset();
       if (this.onSuccessSubmit) this.onSuccessSubmit();
     } catch (e) {
       this.toast.error(getErrorMessage(e));

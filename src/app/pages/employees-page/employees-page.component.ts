@@ -9,6 +9,9 @@ import copy from 'copy-to-clipboard';
 import { HotToastService } from '@ngneat/hot-toast';
 import { CreateEmployeeFormComponent } from '../../components/forms/create-employee-form/create-employee-form.component';
 import { UpdateEmployeeFormComponent } from '../../components/forms/update-employee-form/update-employee-form.component';
+import { LoadingTableComponent } from '../../components/tableStates/loading-table/loading-table.component';
+import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
+import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
 
 @Component({
   selector: 'app-employees-page',
@@ -17,6 +20,9 @@ import { UpdateEmployeeFormComponent } from '../../components/forms/update-emplo
     RouterLink,
     CreateEmployeeFormComponent,
     UpdateEmployeeFormComponent,
+    LoadingTableComponent,
+    EmptyTableComponent,
+    ErrorTableComponent,
   ],
   templateUrl: './employees-page.component.html',
   styleUrl: './employees-page.component.css',
@@ -35,6 +41,7 @@ export class EmployeesPageComponent {
   createEmployeeFormId = 'createEmployeeFormId';
   updateEmployeeFormId = 'updateEmployeeFormId';
   loading = true;
+  error: string | undefined;
 
   constructor(private toast: HotToastService) {}
 
@@ -49,12 +56,15 @@ export class EmployeesPageComponent {
 
   getEmployees = async () => {
     try {
+      this.error = undefined;
       const employees = await axios.get(`${BACKEND_URL}/employees`);
       this.employees = employees.data;
       this.loading = false;
       refreshFlowbite(250);
     } catch (e) {
-      this.toast.error(getErrorMessage(e));
+      const errorMessage = getErrorMessage(e);
+      this.error = errorMessage;
+      this.toast.error(errorMessage);
     }
   };
 
@@ -68,6 +78,7 @@ export class EmployeesPageComponent {
     try {
       await axios.delete(`${BACKEND_URL}/employees/${id}`);
       this.toast.success('Empleado eliminado');
+      this.refreshPage();
     } catch (e) {
       this.toast.error(getErrorMessage(e));
     }

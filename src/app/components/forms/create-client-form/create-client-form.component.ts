@@ -16,6 +16,7 @@ import { BACKEND_URL } from '../../../utils/constants';
 })
 export class CreateClientFormComponent {
   @Input({ required: true }) formId = '';
+  @Input() onSuccessSubmit?: () => void;
   btnCloseModalId = '';
   sendingForm = false;
 
@@ -47,6 +48,7 @@ export class CreateClientFormComponent {
       this.toast.success('Cliente añadido');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newClientForm.reset();
+      if (this.onSuccessSubmit) this.onSuccessSubmit();
     } catch (e) {
       this.toast.error(getErrorMessage(e));
     }

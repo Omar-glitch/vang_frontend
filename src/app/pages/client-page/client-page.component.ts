@@ -6,11 +6,12 @@ import { refreshFlowbite } from '../../utils/flowbite';
 import { CreateClientFormComponent } from '../../components/forms/create-client-form/create-client-form.component';
 import { UpdateClientFormComponent } from '../../components/forms/update-client-form/update-client-form.component';
 import { BACKEND_URL } from '../../utils/constants';
-import { NgOptimizedImage } from '@angular/common';
 import { HotToastService } from '@ngneat/hot-toast';
 import getErrorMessage from '../../utils/errors';
 import copy from 'copy-to-clipboard';
-import { ActivatedRoute, Params } from '@angular/router';
+import { LoadingTableComponent } from '../../components/tableStates/loading-table/loading-table.component';
+import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
+import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
 
 @Component({
   selector: 'app-client-page',
@@ -19,7 +20,9 @@ import { ActivatedRoute, Params } from '@angular/router';
     ReactiveFormsModule,
     CreateClientFormComponent,
     UpdateClientFormComponent,
-    NgOptimizedImage,
+    LoadingTableComponent,
+    EmptyTableComponent,
+    ErrorTableComponent,
   ],
   templateUrl: './client-page.component.html',
   styleUrl: './client-page.component.css',
@@ -28,12 +31,13 @@ export class ClientPageComponent {
   clients: ClientModel[] = [];
   clientUpdateFormValues: ClientModel = {
     _id: '',
-    name: '',
     contact: '',
+    name: '',
   };
   createClientFormId = 'createClientFormId';
   updateClientFormId = 'updateClientFormId';
   loading = true;
+  error: undefined | string;
 
   constructor(private toast: HotToastService) {}
 
@@ -48,12 +52,15 @@ export class ClientPageComponent {
 
   getClients = async () => {
     try {
+      this.error = undefined;
       const clients = await axios.get(`${BACKEND_URL}/clients`);
       this.clients = clients.data;
       this.loading = false;
       refreshFlowbite(250);
     } catch (e) {
-      this.toast.error(getErrorMessage(e));
+      const errorMessage = getErrorMessage(e);
+      this.error = errorMessage;
+      this.toast.error(errorMessage);
     }
   };
 
@@ -67,6 +74,7 @@ export class ClientPageComponent {
     try {
       await axios.delete(`${BACKEND_URL}/clients/${id}`);
       this.toast.success('Cliente eliminado');
+      this.refreshPage();
     } catch (e) {
       this.toast.error(getErrorMessage(e));
     }

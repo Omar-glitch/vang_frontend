@@ -32,7 +32,7 @@
                 type="text"
                 id="simple-search"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Buscar empleado"
+                placeholder="Buscar inventario"
                 required=""
               />
             </div>
@@ -44,8 +44,8 @@
           <button
             type="button"
             class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-            attr.data-modal-target="{{ createEmployeeFormId }}"
-            attr.data-modal-toggle="{{ createEmployeeFormId }}"
+            attr.data-modal-target="{{ createInventoryFormId }}"
+            attr.data-modal-toggle="{{ createInventoryFormId }}"
           >
             <svg
               class="h-5 w-5 mr-2"
@@ -60,7 +60,7 @@
                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
               />
             </svg>
-            Añadir empleado
+            Añadir inventario
           </button>
           <div class="flex items-center space-x-3 w-full md:w-auto">
             <button
@@ -210,10 +210,10 @@
         @if (error) {
         <app-error-table [message]="error" />
         } @else if (loading) {
-        <app-loading-table message="Cargando empleados..." />
-        } @else if (!employees.length && !loading) {
-        <app-empty-table message="No hay empleados" />
-        } @else if (employees.length) {
+        <app-loading-table message="Cargando inventario..." />
+        } @else if (!inventories.length && !loading) {
+        <app-empty-table message="No hay inventario" />
+        } @else if (inventories.length) {
         <table
           class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
@@ -223,35 +223,33 @@
             <tr>
               <th scope="col" class="px-4 py-3">ID</th>
               <th scope="col" class="px-4 py-3">Nombre</th>
-              <th scope="col" class="px-4 py-3">Edad</th>
-              <th scope="col" class="px-4 py-3">Rol</th>
-              <th scope="col" class="px-4 py-3">Email</th>
-              <th scope="col" class="px-4 py-3">Teléfono</th>
-              <th scope="col" class="px-4 py-3">Dirección</th>
+              <th scope="col" class="px-4 py-3">Descripción</th>
+              <th scope="col" class="px-4 py-3">Tipo</th>
+              <th scope="col" class="px-4 py-3">Stock</th>
+              <th scope="col" class="px-4 py-3">Mín</th>
               <th scope="col" class="px-4 py-3">
                 <span class="sr-only">Actions</span>
               </th>
             </tr>
           </thead>
           <tbody>
-            @for (employee of employees; track employee._id) {
+            @for (inventory of inventories; track inventory._id) {
             <tr class="border-b dark:border-gray-700">
               <th
                 scope="row"
                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
-                {{ employee._id }}
+                {{ inventory._id }}
               </th>
-              <td class="px-4 py-3">{{ employee.name }}</td>
-              <td class="px-4 py-3">{{ employee.age }}</td>
-              <td class="px-4 py-3">{{ employee.role }}</td>
-              <td class="px-4 py-3">{{ employee.email }}</td>
-              <td class="px-4 py-3">{{ employee.phone }}</td>
-              <td class="px-4 py-3">{{ employee.direction }}</td>
+              <td class="px-4 py-3">{{ inventory.name }}</td>
+              <td class="px-4 py-3">{{ inventory.description }}</td>
+              <td class="px-4 py-3">{{ inventory.type }}</td>
+              <td class="px-4 py-3">{{ inventory.stock }}</td>
+              <td class="px-4 py-3">{{ inventory.min }}</td>
               <td class="px-4 py-3 flex items-center justify-end">
                 <button
-                  id="{{ employee._id }}-button"
-                  attr.data-dropdown-toggle="{{ employee._id }}-dropdown"
+                  id="{{ inventory._id }}-button"
+                  attr.data-dropdown-toggle="{{ inventory._id }}-dropdown"
                   class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                   type="button"
                 >
@@ -268,12 +266,12 @@
                   </svg>
                 </button>
                 <div
-                  id="{{ employee._id }}-dropdown"
+                  id="{{ inventory._id }}-dropdown"
                   class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                 >
                   <ul
                     class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    attr.aria-labelledby="{{ employee._id }}-button"
+                    attr.aria-labelledby="{{ inventory._id }}-button"
                   >
                     <li>
                       <a
@@ -285,9 +283,9 @@
                     <li>
                       <button
                         class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        (click)="setEditEmployeeValues(employee)"
-                        attr.data-modal-target="{{ updateEmployeeFormId }}"
-                        attr.data-modal-show="{{ updateEmployeeFormId }}"
+                        (click)="setEditInventoryValues(inventory)"
+                        attr.data-modal-target="{{ updateInventoryFormId }}"
+                        attr.data-modal-show="{{ updateInventoryFormId }}"
                       >
                         Editar
                       </button>
@@ -296,7 +294,7 @@
                   <div class="py-1">
                     <button
                       type="button"
-                      (click)="deleteEmployee(employee._id)"
+                      (click)="deleteInventory(inventory._id)"
                       class="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Eliminar
@@ -405,12 +403,12 @@
   </div>
 </section>
 
-<app-create-employee-form
-  [formId]="createEmployeeFormId"
+<app-create-inventory-form
+  [formId]="createInventoryFormId"
   [onSuccessSubmit]="refreshPage"
 />
-<app-update-employee-form
-  [formId]="updateEmployeeFormId"
-  [formValues]="employeeUpdateFormValues"
+<app-update-inventory-form
+  [formId]="updateInventoryFormId"
   [onSuccessSubmit]="refreshPage"
+  [formValues]="inventoryUpdateFormValues"
 />
