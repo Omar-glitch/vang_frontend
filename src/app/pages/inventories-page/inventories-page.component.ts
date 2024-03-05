@@ -5,7 +5,10 @@ import copy from 'copy-to-clipboard';
 import { DEFAULT_FLOWBITE_TIME, refreshFlowbite } from '../../utils/flowbite';
 import { BACKEND_URL } from '../../utils/constants';
 import getErrorMessage from '../../utils/errors';
-import { InventoryModel } from '../../../models/InventoryModel';
+import {
+  DEFAULT_INVENTORY,
+  InventoryModel,
+} from '../../../models/InventoryModel';
 import { RouterLink } from '@angular/router';
 import { LoadingTableComponent } from '../../components/tableStates/loading-table/loading-table.component';
 import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
@@ -29,15 +32,7 @@ import { UpdateInventoryFormComponent } from '../../components/forms/update-inve
 })
 export class InventoriesPageComponent {
   inventories: InventoryModel[] = [];
-  inventoryUpdateFormValues: InventoryModel = {
-    _id: '',
-    description: '',
-    min: 0,
-    name: '',
-    cost: 0,
-    stock: 0,
-    type: '',
-  };
+  inventoryUpdateFormValues: InventoryModel = DEFAULT_INVENTORY;
   createInventoryFormId = 'createInventoryFormId';
   updateInventoryFormId = 'updateInventoryFormId';
   loading = true;
