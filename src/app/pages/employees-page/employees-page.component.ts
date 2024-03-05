@@ -12,6 +12,7 @@ import { UpdateEmployeeFormComponent } from '../../components/forms/update-emplo
 import { LoadingTableComponent } from '../../components/tableStates/loading-table/loading-table.component';
 import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
+import { objectIdToInputDate } from '../../utils/texts';
 
 @Component({
   selector: 'app-employees-page',
@@ -44,6 +45,8 @@ export class EmployeesPageComponent {
   error: string | undefined;
 
   constructor(private toast: HotToastService) {}
+
+  objectIdDate = objectIdToInputDate;
 
   copyText = (str: string) => {
     copy(str);

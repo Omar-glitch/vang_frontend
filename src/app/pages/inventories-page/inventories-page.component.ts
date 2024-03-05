@@ -34,6 +34,7 @@ export class InventoriesPageComponent {
     description: '',
     min: 0,
     name: '',
+    cost: 0,
     stock: 0,
     type: '',
   };

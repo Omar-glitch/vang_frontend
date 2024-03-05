@@ -102,7 +102,7 @@ export class UpdateEmployeeFormComponent {
       );
       clickCloseBtnModal(this.btnCloseModalId);
       if (this.onSuccessSubmit) this.onSuccessSubmit();
-      this.toast.success('Cliente actualizado');
+      this.toast.success('Empleado actualizado');
     } catch (e) {
       this.toast.error(getErrorMessage(e));
     }
