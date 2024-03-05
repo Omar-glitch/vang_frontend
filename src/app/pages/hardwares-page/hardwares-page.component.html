@@ -30,7 +30,7 @@
                 type="text"
                 id="simple-search"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Buscar inventario"
+                placeholder="Buscar equipo"
                 required=""
               />
             </div>
@@ -42,8 +42,8 @@
           <button
             type="button"
             class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-            attr.data-modal-target="{{ createInventoryFormId }}"
-            attr.data-modal-toggle="{{ createInventoryFormId }}"
+            attr.data-modal-target="{{ createHardwareFormId }}"
+            attr.data-modal-toggle="{{ createHardwareFormId }}"
           >
             <svg
               class="h-5 w-5 mr-2"
@@ -58,7 +58,7 @@
                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
               />
             </svg>
-            Añadir inventario
+            Añadir equipo
           </button>
           <div class="flex items-center space-x-3 w-full md:w-auto">
             <button
@@ -208,10 +208,10 @@
         @if (error) {
         <app-error-table [message]="error" />
         } @else if (loading) {
-        <app-loading-table message="Cargando inventario..." />
-        } @else if (!inventories.length && !loading) {
-        <app-empty-table message="No hay inventario" />
-        } @else if (inventories.length) {
+        <app-loading-table message="Cargando equipos..." />
+        } @else if (!hardwares.length && !loading) {
+        <app-empty-table message="No hay equipos" />
+        } @else if (hardwares.length) {
         <table
           class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
@@ -222,39 +222,37 @@
               <th scope="col" class="px-4 py-3">ID</th>
               <th scope="col" class="px-4 py-3">Nombre</th>
               <th scope="col" class="px-4 py-3">Descripción</th>
-              <th scope="col" class="px-4 py-3">Tipo</th>
-              <th scope="col" class="px-4 py-3">Costo</th>
               <th scope="col" class="px-4 py-3">Stock</th>
-              <th scope="col" class="px-4 py-3">Mín</th>
+              <th scope="col" class="px-4 py-3">Costo</th>
+              <th scope="col" class="px-4 py-3">Prioridad</th>
               <th scope="col" class="px-4 py-3">
                 <span class="sr-only">Actions</span>
               </th>
             </tr>
           </thead>
           <tbody>
-            @for (inventory of inventories; track inventory._id) {
+            @for (hardware of hardwares; track hardware._id) {
             <tr class="border-b dark:border-gray-700">
               <th
                 scope="row"
                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
                 <p
-                  (click)="copyText(inventory._id)"
+                  (click)="copyText(hardware._id)"
                   class="w-min hover:cursor-pointer hover:dark:text-blue-500"
                 >
-                  {{ inventory._id }}
+                  {{ hardware._id }}
                 </p>
               </th>
-              <td class="px-4 py-3">{{ inventory.name }}</td>
-              <td class="px-4 py-3">{{ inventory.description }}</td>
-              <td class="px-4 py-3">{{ inventory.type }}</td>
-              <td class="px-4 py-3">{{ inventory.cost }}</td>
-              <td class="px-4 py-3">{{ inventory.stock }}</td>
-              <td class="px-4 py-3">{{ inventory.min }}</td>
+              <td class="px-4 py-3">{{ hardware.name }}</td>
+              <td class="px-4 py-3">{{ hardware.description }}</td>
+              <td class="px-4 py-3">{{ hardware.stock }}</td>
+              <td class="px-4 py-3">{{ hardware.cost }}</td>
+              <td class="px-4 py-3">{{ hardware.priority }}</td>
               <td class="px-4 py-3 flex items-center justify-end">
                 <button
-                  id="{{ inventory._id }}-button"
-                  attr.data-dropdown-toggle="{{ inventory._id }}-dropdown"
+                  id="{{ hardware._id }}-button"
+                  attr.data-dropdown-toggle="{{ hardware._id }}-dropdown"
                   class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                   type="button"
                 >
@@ -271,12 +269,12 @@
                   </svg>
                 </button>
                 <div
-                  id="{{ inventory._id }}-dropdown"
+                  id="{{ hardware._id }}-dropdown"
                   class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                 >
                   <ul
                     class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                    attr.aria-labelledby="{{ inventory._id }}-button"
+                    attr.aria-labelledby="{{ hardware._id }}-button"
                   >
                     <li>
                       <a
@@ -288,9 +286,9 @@
                     <li>
                       <button
                         class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        (click)="setEditInventoryValues(inventory)"
-                        attr.data-modal-target="{{ updateInventoryFormId }}"
-                        attr.data-modal-show="{{ updateInventoryFormId }}"
+                        (click)="setEditHardwareValues(hardware)"
+                        attr.data-modal-target="{{ updateHardwareFormId }}"
+                        attr.data-modal-show="{{ updateHardwareFormId }}"
                       >
                         Editar
                       </button>
@@ -299,7 +297,7 @@
                   <div class="py-1">
                     <button
                       type="button"
-                      (click)="deleteInventory(inventory._id)"
+                      (click)="deleteHardware(hardware._id)"
                       class="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Eliminar
@@ -322,21 +320,21 @@
         >
           Mostrando
           <span class="font-semibold text-gray-900 dark:text-white">{{
-            inventories.length
+            hardwares.length
           }}</span>
-          {{ inventories.length === 1 ? "inventario" : "inventarios" }}
+          {{ hardwares.length === 1 ? "equipo" : "equipos" }}
         </span>
       </nav>
     </div>
   </div>
 </section>
 
-<app-create-inventory-form
-  [formId]="createInventoryFormId"
+<app-create-hardware-form
+  [formId]="createHardwareFormId"
   [onSuccessSubmit]="refreshPage"
 />
-<app-update-inventory-form
-  [formId]="updateInventoryFormId"
+<app-update-hardware-form
+  [formId]="updateHardwareFormId"
+  [formValues]="hardwareUpdateFormValues"
   [onSuccessSubmit]="refreshPage"
-  [formValues]="inventoryUpdateFormValues"
 />

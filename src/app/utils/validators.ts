@@ -14,7 +14,7 @@ export function stringValidator({
   minLength: number;
   maxLength: number;
   regex?: { value: RegExp; message: string };
-  list?: string[];
+  list?: readonly string[];
 }): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value)
@@ -79,7 +79,7 @@ export function numberValidator({
       return {
         numberValidator: {
           value: control.value,
-          message: `Mínimo ${min} letras`,
+          message: `Mínimo ${min}`,
         },
       };
     if (val > max)

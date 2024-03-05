@@ -28,6 +28,7 @@ export class UpdateInventoryFormComponent {
     description: '',
     min: 0,
     name: '',
+    cost: 0,
     stock: 0,
     type: '',
   };
@@ -58,6 +59,9 @@ export class UpdateInventoryFormComponent {
     ]),
     min: new FormControl(this.formValues.min, [
       numberValidator({ min: 0, max: 2_500 }),
+    ]),
+    cost: new FormControl(this.formValues.cost, [
+      numberValidator({ min: 0, max: 120_000 }),
     ]),
   });
   prevForm = this.updateInventoryForm.value;

@@ -7,48 +7,41 @@ import {
 } from '../../../utils/validators';
 import { HotToastService } from '@ngneat/hot-toast';
 import axios from 'axios';
+import { BACKEND_URL } from '../../../utils/constants';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
-import { BACKEND_URL } from '../../../utils/constants';
+import { HARDWARE_PRIORITIES } from '../../../../models/HardwareModel';
 
 @Component({
-  selector: 'app-create-inventory-form',
+  selector: 'app-create-hardware-form',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl: './create-inventory-form.component.html',
-  styleUrl: './create-inventory-form.component.css',
+  templateUrl: './create-hardware-form.component.html',
+  styleUrl: './create-hardware-form.component.css',
 })
-export class CreateInventoryFormComponent {
-  @Input({ required: true }) formId!: string;
-  @Input() onSuccessSubmit?: () => void;
+export class CreateHardwareFormComponent {
+  @Input({ required: true }) formId = '';
   btnCloseModalId = '';
   sendingForm = false;
+  hardwarePriorities = HARDWARE_PRIORITIES;
+  @Input() onSuccessSubmit?: () => void;
 
-  newInventoryForm = new FormGroup({
+  newHardwareForm = new FormGroup({
     name: new FormControl('', [
-      stringValidator({ minLength: 3, maxLength: 32 }),
+      stringValidator({ minLength: 2, maxLength: 32 }),
     ]),
     description: new FormControl('', [
       stringValidator({ minLength: 8, maxLength: 54 }),
     ]),
-    type: new FormControl('batería', [
+    cost: new FormControl(0, [numberValidator({ min: 20, max: 120_000 })]),
+    stock: new FormControl(0, [numberValidator({ min: 1, max: 2500 })]),
+    priority: new FormControl(HARDWARE_PRIORITIES[0], [
       stringValidator({
-        minLength: 1,
-        maxLength: 32,
-        list: [
-          'batería',
-          'centro de carga',
-          'pantalla',
-          'tapa trasera',
-          'micrófono',
-          'placa madre',
-          'circuitos integrados',
-        ],
+        minLength: 2,
+        maxLength: 60,
+        list: HARDWARE_PRIORITIES,
       }),
     ]),
-    stock: new FormControl(0, [numberValidator({ min: 1, max: 2_500 })]),
-    cost: new FormControl(0, [numberValidator({ min: 20, max: 120_000 })]),
-    min: new FormControl(0, [numberValidator({ min: 0, max: 2_500 })]),
   });
 
   constructor(private toast: HotToastService) {}
@@ -60,19 +53,16 @@ export class CreateInventoryFormComponent {
   }
 
   showError = (field: string) => {
-    return errorOf(field, this.newInventoryForm);
+    return errorOf(field, this.newHardwareForm);
   };
 
   onSubmit = async () => {
     this.sendingForm = true;
     try {
-      await axios.post(
-        `${BACKEND_URL}/inventories`,
-        this.newInventoryForm.value
-      );
-      this.toast.success('Inventario añadido');
+      await axios.post(`${BACKEND_URL}/hardwares`, this.newHardwareForm.value);
+      this.toast.success('Equipo añadido');
       clickCloseBtnModal(this.btnCloseModalId);
-      this.newInventoryForm.reset();
+      this.newHardwareForm.reset();
       if (this.onSuccessSubmit) this.onSuccessSubmit();
     } catch (e) {
       this.toast.error(getErrorMessage(e));
