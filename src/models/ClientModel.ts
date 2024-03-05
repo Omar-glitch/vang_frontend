@@ -3,3 +3,9 @@ export type ClientModel = {
   name: string;
   contact: string;
 };
+
+export const DEFAULT_CLIENT: ClientModel = {
+  _id: '',
+  contact: '',
+  name: '',
+};

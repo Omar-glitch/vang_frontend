@@ -2,7 +2,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import axios from 'axios';
 import { errorOf, stringValidator } from '../../../utils/validators';
-import { ClientModel } from '../../../../models/ClientModel';
+import { ClientModel, DEFAULT_CLIENT } from '../../../../models/ClientModel';
 import deepEqual from 'deep-equal';
 import { HotToastService } from '@ngneat/hot-toast';
 import getErrorMessage from '../../../utils/errors';
@@ -18,11 +18,7 @@ import { BACKEND_URL } from '../../../utils/constants';
 })
 export class UpdateClientFormComponent {
   @Input({ required: true }) formId = '';
-  @Input({ required: true }) formValues: ClientModel = {
-    _id: '',
-    contact: '',
-    name: '',
-  };
+  @Input({ required: true }) formValues: ClientModel = DEFAULT_CLIENT;
   updateClientForm = new FormGroup({
     name: new FormControl(this.formValues.name, [
       stringValidator({ minLength: 3, maxLength: 12 }),
@@ -41,7 +37,10 @@ export class UpdateClientFormComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
       const f = changes['formValues'].currentValue as ClientModel;
-      this.updateClientForm.setValue({ name: f.name, contact: f.contact });
+      this.updateClientForm.setValue({
+        name: f.name,
+        contact: f.contact,
+      });
       this.prevForm = this.updateClientForm.value;
     }
     if (changes['formId']) {

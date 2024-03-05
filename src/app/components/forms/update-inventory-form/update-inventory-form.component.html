@@ -136,15 +136,9 @@
               formControlName="type"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             >
-              <option selected="" ngValue="batería">Batería</option>
-              <option ngValue="centro de carga">Centro de carga</option>
-              <option ngValue="pantalla">Pantalla</option>
-              <option ngValue="tapa trasera">Tapa trasera</option>
-              <option ngValue="micrófono">Micrófono</option>
-              <option ngValue="placa madre">Placa madre</option>
-              <option ngValue="circuitos integrados">
-                Circuitos integrados
-              </option>
+              @for (inventoryType of inventoryTypes; track $index) {
+              <option ngValue="{{ inventoryType }}">{{ inventoryType }}</option>
+              }
             </select>
             <p class="text-xs dark:text-white">{{ showError("type") }}</p>
           </div>

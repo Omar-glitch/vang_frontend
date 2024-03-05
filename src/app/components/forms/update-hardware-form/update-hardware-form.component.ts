@@ -56,8 +56,13 @@ export class UpdateHardwareFormComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
       const f = changes['formValues'].currentValue as HardwareModel;
-      const { _id, ...rest } = f;
-      this.updateHardwareForm.setValue(rest);
+      this.updateHardwareForm.setValue({
+        cost: f.cost,
+        description: f.description,
+        name: f.name,
+        priority: f.priority,
+        stock: f.stock,
+      });
       this.prevForm = this.updateHardwareForm.value;
     }
     if (changes['formId']) {

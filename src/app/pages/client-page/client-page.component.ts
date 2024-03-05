@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import axios from 'axios';
-import { ClientModel } from '../../../models/ClientModel';
+import { ClientModel, DEFAULT_CLIENT } from '../../../models/ClientModel';
 import { refreshFlowbite } from '../../utils/flowbite';
 import { CreateClientFormComponent } from '../../components/forms/create-client-form/create-client-form.component';
 import { UpdateClientFormComponent } from '../../components/forms/update-client-form/update-client-form.component';
@@ -30,11 +30,7 @@ import { objectIdToInputDate } from '../../utils/texts';
 })
 export class ClientPageComponent {
   clients: ClientModel[] = [];
-  clientUpdateFormValues: ClientModel = {
-    _id: '',
-    contact: '',
-    name: '',
-  };
+  clientUpdateFormValues: ClientModel = DEFAULT_CLIENT;
   createClientFormId = 'createClientFormId';
   updateClientFormId = 'updateClientFormId';
   loading = true;

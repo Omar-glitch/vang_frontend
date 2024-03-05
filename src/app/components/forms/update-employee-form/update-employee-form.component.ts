@@ -1,5 +1,9 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { EmployeeModel } from '../../../../models/EmployeeModel';
+import {
+  DEFAULT_EMPLOYEE,
+  EMPLOYEE_ROLES,
+  EmployeeModel,
+} from '../../../../models/EmployeeModel';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   errorOf,
@@ -22,15 +26,8 @@ import { BACKEND_URL } from '../../../utils/constants';
 })
 export class UpdateEmployeeFormComponent {
   @Input({ required: true }) formId = '';
-  @Input({ required: true }) formValues: EmployeeModel = {
-    _id: '',
-    name: '',
-    age: 20,
-    direction: '',
-    email: '',
-    phone: '',
-    role: '',
-  };
+  @Input({ required: true }) formValues: EmployeeModel = DEFAULT_EMPLOYEE;
+  employeeRoles = EMPLOYEE_ROLES;
   @Input() onSuccessSubmit?: () => void;
   updateEmployeeForm = new FormGroup({
     name: new FormControl(this.formValues.name, [
@@ -39,11 +36,11 @@ export class UpdateEmployeeFormComponent {
     age: new FormControl(this.formValues.age, [
       numberValidator({ min: 16, max: 80 }),
     ]),
-    role: new FormControl('admin', [
+    role: new FormControl(EMPLOYEE_ROLES[0] as string, [
       stringValidator({
         minLength: 4,
         maxLength: 32,
-        list: ['reparador', 'finanzas', 'admin', 'user'],
+        list: EMPLOYEE_ROLES,
       }),
     ]),
     direction: new FormControl(this.formValues.direction, [
@@ -76,8 +73,14 @@ export class UpdateEmployeeFormComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
       const f = changes['formValues'].currentValue as EmployeeModel;
-      const { _id, ...rest } = f;
-      this.updateEmployeeForm.setValue(rest);
+      this.updateEmployeeForm.setValue({
+        age: f.age,
+        direction: f.direction,
+        email: f.email,
+        name: f.name,
+        phone: f.phone,
+        role: f.role,
+      });
       this.prevForm = this.updateEmployeeForm.value;
     }
     if (changes['formId']) {

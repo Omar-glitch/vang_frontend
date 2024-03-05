@@ -10,6 +10,7 @@ import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
 import { BACKEND_URL } from '../../../utils/constants';
+import { EMPLOYEE_ROLES } from '../../../../models/EmployeeModel';
 
 @Component({
   selector: 'app-create-employee-form',
@@ -22,6 +23,7 @@ export class CreateEmployeeFormComponent {
   @Input({ required: true }) formId = '';
   btnCloseModalId = '';
   sendingForm = false;
+  employeeRoles = EMPLOYEE_ROLES;
   @Input() onSuccessSubmit?: () => void;
 
   newEmployeeForm = new FormGroup({
@@ -29,11 +31,11 @@ export class CreateEmployeeFormComponent {
       stringValidator({ minLength: 3, maxLength: 32 }),
     ]),
     age: new FormControl(25, [numberValidator({ min: 16, max: 80 })]),
-    role: new FormControl('admin', [
+    role: new FormControl(EMPLOYEE_ROLES[0], [
       stringValidator({
         minLength: 4,
         maxLength: 32,
-        list: ['reparador', 'finanzas', 'admin', 'user'],
+        list: EMPLOYEE_ROLES,
       }),
     ]),
     direction: new FormControl('', [

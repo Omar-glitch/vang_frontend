@@ -11,7 +11,11 @@ import {
 } from '../../../utils/validators';
 import { HotToastService } from '@ngneat/hot-toast';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { InventoryModel } from '../../../../models/InventoryModel';
+import {
+  DEFAULT_INVENTORY,
+  INVENTORY_TYPES,
+  InventoryModel,
+} from '../../../../models/InventoryModel';
 
 @Component({
   selector: 'app-update-inventory-form',
@@ -23,15 +27,8 @@ import { InventoryModel } from '../../../../models/InventoryModel';
 export class UpdateInventoryFormComponent {
   @Input({ required: true }) formId!: string;
   @Input() onSuccessSubmit?: () => void;
-  @Input({ required: true }) formValues: InventoryModel = {
-    _id: '',
-    description: '',
-    min: 0,
-    name: '',
-    cost: 0,
-    stock: 0,
-    type: '',
-  };
+  @Input({ required: true }) formValues: InventoryModel = DEFAULT_INVENTORY;
+  inventoryTypes = INVENTORY_TYPES;
   updateInventoryForm = new FormGroup({
     name: new FormControl(this.formValues.name, [
       stringValidator({ minLength: 3, maxLength: 32 }),
@@ -43,15 +40,7 @@ export class UpdateInventoryFormComponent {
       stringValidator({
         minLength: 1,
         maxLength: 32,
-        list: [
-          'batería',
-          'centro de carga',
-          'pantalla',
-          'tapa trasera',
-          'micrófono',
-          'placa madre',
-          'circuitos integrados',
-        ],
+        list: INVENTORY_TYPES,
       }),
     ]),
     stock: new FormControl(this.formValues.stock, [
@@ -72,9 +61,15 @@ export class UpdateInventoryFormComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
-      const { _id, ...rest } = changes['formValues']
-        .currentValue as InventoryModel;
-      this.updateInventoryForm.setValue(rest);
+      const f = changes['formValues'].currentValue as InventoryModel;
+      this.updateInventoryForm.setValue({
+        cost: f.cost,
+        description: f.description,
+        min: f.min,
+        name: f.name,
+        stock: f.stock,
+        type: f.type,
+      });
       this.prevForm = this.updateInventoryForm.value;
     }
     if (changes['formId']) {

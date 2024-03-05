@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { EmployeeModel } from '../../../models/EmployeeModel';
+import { DEFAULT_EMPLOYEE, EmployeeModel } from '../../../models/EmployeeModel';
 import axios from 'axios';
 import { BACKEND_URL } from '../../utils/constants';
 import getErrorMessage from '../../utils/errors';
@@ -30,15 +30,7 @@ import { objectIdToInputDate } from '../../utils/texts';
 })
 export class EmployeesPageComponent {
   employees: EmployeeModel[] = [];
-  employeeUpdateFormValues: EmployeeModel = {
-    _id: '',
-    name: '',
-    age: 20,
-    direction: '',
-    email: '',
-    phone: '',
-    role: '',
-  };
+  employeeUpdateFormValues: EmployeeModel = DEFAULT_EMPLOYEE;
   createEmployeeFormId = 'createEmployeeFormId';
   updateEmployeeFormId = 'updateEmployeeFormId';
   loading = true;

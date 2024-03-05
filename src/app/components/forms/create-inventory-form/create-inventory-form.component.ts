@@ -10,6 +10,7 @@ import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
 import { BACKEND_URL } from '../../../utils/constants';
+import { INVENTORY_TYPES } from '../../../../models/InventoryModel';
 
 @Component({
   selector: 'app-create-inventory-form',
@@ -23,6 +24,7 @@ export class CreateInventoryFormComponent {
   @Input() onSuccessSubmit?: () => void;
   btnCloseModalId = '';
   sendingForm = false;
+  inventoryTypes = INVENTORY_TYPES;
 
   newInventoryForm = new FormGroup({
     name: new FormControl('', [
@@ -35,15 +37,7 @@ export class CreateInventoryFormComponent {
       stringValidator({
         minLength: 1,
         maxLength: 32,
-        list: [
-          'batería',
-          'centro de carga',
-          'pantalla',
-          'tapa trasera',
-          'micrófono',
-          'placa madre',
-          'circuitos integrados',
-        ],
+        list: INVENTORY_TYPES,
       }),
     ]),
     stock: new FormControl(0, [numberValidator({ min: 1, max: 2_500 })]),
