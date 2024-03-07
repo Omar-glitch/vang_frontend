@@ -6,6 +6,7 @@ import { InventoriesPageComponent } from './pages/inventories-page/inventories-p
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { HardwaresPageComponent } from './pages/hardwares-page/hardwares-page.component';
 import { RepairsPageComponent } from './pages/repairs-page/repairs-page.component';
+import { PurchasesPageComponent } from './pages/purchases-page/purchases-page.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,11 @@ export const routes: Routes = [
     path: 'dashboard/repairs',
     title: 'Reparaciones | Reps',
     component: RepairsPageComponent,
+  },
+  {
+    path: 'dashboard/purchases',
+    title: 'Compras | Reps',
+    component: PurchasesPageComponent,
   },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
