@@ -22,7 +22,6 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './update-hardware-form.component.html',
-  styleUrl: './update-hardware-form.component.css',
 })
 export class UpdateHardwareFormComponent {
   @Input({ required: true }) formId = '';

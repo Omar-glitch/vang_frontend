@@ -14,7 +14,6 @@ import { BACKEND_URL } from '../../../utils/constants';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './update-client-form.component.html',
-  styleUrl: './update-client-form.component.css',
 })
 export class UpdateClientFormComponent {
   @Input({ required: true }) formId = '';

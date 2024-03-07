@@ -12,7 +12,6 @@ import { BACKEND_URL } from '../../../utils/constants';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './create-client-form.component.html',
-  styleUrl: './create-client-form.component.css',
 })
 export class CreateClientFormComponent {
   @Input({ required: true }) formId = '';

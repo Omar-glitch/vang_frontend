@@ -17,7 +17,6 @@ import { INVENTORY_TYPES } from '../../../../models/InventoryModel';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './create-inventory-form.component.html',
-  styleUrl: './create-inventory-form.component.css',
 })
 export class CreateInventoryFormComponent {
   @Input({ required: true }) formId!: string;

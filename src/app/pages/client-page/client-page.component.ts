@@ -26,7 +26,6 @@ import { objectIdToInputDate } from '../../utils/texts';
     ErrorTableComponent,
   ],
   templateUrl: './client-page.component.html',
-  styleUrl: './client-page.component.css',
 })
 export class ClientPageComponent {
   clients: ClientModel[] = [];

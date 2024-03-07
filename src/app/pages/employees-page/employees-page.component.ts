@@ -26,7 +26,6 @@ import { objectIdToInputDate } from '../../utils/texts';
     ErrorTableComponent,
   ],
   templateUrl: './employees-page.component.html',
-  styleUrl: './employees-page.component.css',
 })
 export class EmployeesPageComponent {
   employees: EmployeeModel[] = [];

@@ -17,7 +17,6 @@ import { HARDWARE_PRIORITIES } from '../../../../models/HardwareModel';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './create-hardware-form.component.html',
-  styleUrl: './create-hardware-form.component.css',
 })
 export class CreateHardwareFormComponent {
   @Input({ required: true }) formId = '';

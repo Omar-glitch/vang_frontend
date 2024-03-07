@@ -7,7 +7,6 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [NgOptimizedImage, RouterLink],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   DROPDOWN_BUTTON_ID = 'dropdown_navbar_toggle';

@@ -26,7 +26,6 @@ import { ErrorTableComponent } from '../../components/tableStates/error-table/er
     ErrorTableComponent,
   ],
   templateUrl: './hardwares-page.component.html',
-  styleUrl: './hardwares-page.component.css',
 })
 export class HardwaresPageComponent {
   hardwares: HardwareModel[] = [];
