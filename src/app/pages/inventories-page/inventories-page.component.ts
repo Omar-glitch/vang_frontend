@@ -28,7 +28,6 @@ import { UpdateInventoryFormComponent } from '../../components/forms/update-inve
     ErrorTableComponent,
   ],
   templateUrl: './inventories-page.component.html',
-  styleUrl: './inventories-page.component.css',
 })
 export class InventoriesPageComponent {
   inventories: InventoryModel[] = [];

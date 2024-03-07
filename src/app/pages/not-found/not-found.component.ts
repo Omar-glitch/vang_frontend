@@ -7,6 +7,5 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './not-found.component.html',
-  styleUrl: './not-found.component.css',
 })
 export class NotFoundComponent {}

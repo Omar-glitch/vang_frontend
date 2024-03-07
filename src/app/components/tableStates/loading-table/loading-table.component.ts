@@ -5,7 +5,6 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './loading-table.component.html',
-  styleUrl: './loading-table.component.css',
 })
 export class LoadingTableComponent {
   @Input() message?: string;

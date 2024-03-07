@@ -22,7 +22,6 @@ import {
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './update-inventory-form.component.html',
-  styleUrl: './update-inventory-form.component.css',
 })
 export class UpdateInventoryFormComponent {
   @Input({ required: true }) formId!: string;

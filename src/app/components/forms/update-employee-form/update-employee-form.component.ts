@@ -22,7 +22,6 @@ import { BACKEND_URL } from '../../../utils/constants';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './update-employee-form.component.html',
-  styleUrl: './update-employee-form.component.css',
 })
 export class UpdateEmployeeFormComponent {
   @Input({ required: true }) formId = '';

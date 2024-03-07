@@ -17,7 +17,6 @@ import { EMPLOYEE_ROLES } from '../../../../models/EmployeeModel';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './create-employee-form.component.html',
-  styleUrl: './create-employee-form.component.css',
 })
 export class CreateEmployeeFormComponent {
   @Input({ required: true }) formId = '';
