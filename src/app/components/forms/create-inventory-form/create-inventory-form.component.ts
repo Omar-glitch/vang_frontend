@@ -6,11 +6,10 @@ import {
   stringValidator,
 } from '../../../utils/validators';
 import { HotToastService } from '@ngneat/hot-toast';
-import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
-import { BACKEND_URL } from '../../../utils/constants';
 import { INVENTORY_TYPES } from '../../../../models/InventoryModel';
+import { InventoryService } from '../../../services/inventory.service';
 
 @Component({
   selector: 'app-create-inventory-form',
@@ -32,7 +31,7 @@ export class CreateInventoryFormComponent {
     description: new FormControl('', [
       stringValidator({ minLength: 8, maxLength: 54 }),
     ]),
-    type: new FormControl('batería', [
+    type: new FormControl(INVENTORY_TYPES[0], [
       stringValidator({
         minLength: 1,
         maxLength: 32,
@@ -44,7 +43,10 @@ export class CreateInventoryFormComponent {
     min: new FormControl(0, [numberValidator({ min: 0, max: 2_500 })]),
   });
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private inventoryService: InventoryService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formId']) {
@@ -59,10 +61,7 @@ export class CreateInventoryFormComponent {
   onSubmit = async () => {
     this.sendingForm = true;
     try {
-      await axios.post(
-        `${BACKEND_URL}/inventories`,
-        this.newInventoryForm.value
-      );
+      await this.inventoryService.postInventory(this.newInventoryForm.value);
       this.toast.success('Inventario añadido');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newInventoryForm.reset();

@@ -1,11 +1,10 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { errorOf, stringValidator } from '../../../utils/validators';
-import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import { HotToastService } from '@ngneat/hot-toast';
 import getErrorMessage from '../../../utils/errors';
-import { BACKEND_URL } from '../../../utils/constants';
+import { ClientService } from '../../../services/client.service';
 
 @Component({
   selector: 'app-create-client-form',
@@ -28,7 +27,10 @@ export class CreateClientFormComponent {
     ]),
   });
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private clientService: ClientService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formId']) {
@@ -43,7 +45,7 @@ export class CreateClientFormComponent {
   onSubmit = async () => {
     this.sendingForm = true;
     try {
-      await axios.post(`${BACKEND_URL}/clients`, this.newClientForm.value);
+      await this.clientService.postClient(this.newClientForm.value);
       this.toast.success('Cliente añadido');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newClientForm.reset();

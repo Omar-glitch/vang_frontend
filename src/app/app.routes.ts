@@ -5,6 +5,7 @@ import { ClientPageComponent } from './pages/client-page/client-page.component';
 import { InventoriesPageComponent } from './pages/inventories-page/inventories-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { HardwaresPageComponent } from './pages/hardwares-page/hardwares-page.component';
+import { RepairsPageComponent } from './pages/repairs-page/repairs-page.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,11 @@ export const routes: Routes = [
     path: 'dashboard/hardwares',
     title: 'Equipos | Reps',
     component: HardwaresPageComponent,
+  },
+  {
+    path: 'dashboard/repairs',
+    title: 'Reparaciones | Reps',
+    component: RepairsPageComponent,
   },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];

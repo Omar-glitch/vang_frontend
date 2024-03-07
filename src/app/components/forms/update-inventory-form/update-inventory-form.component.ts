@@ -1,9 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import axios from 'axios';
 import deepEqual from 'deep-equal';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
-import { BACKEND_URL } from '../../../utils/constants';
 import {
   errorOf,
   numberValidator,
@@ -16,6 +14,7 @@ import {
   INVENTORY_TYPES,
   InventoryModel,
 } from '../../../../models/InventoryModel';
+import { InventoryService } from '../../../services/inventory.service';
 
 @Component({
   selector: 'app-update-inventory-form',
@@ -56,7 +55,10 @@ export class UpdateInventoryFormComponent {
   btnCloseModalId = '';
   sendingForm = false;
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private inventoryService: InventoryService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
@@ -87,8 +89,8 @@ export class UpdateInventoryFormComponent {
     }
     this.sendingForm = true;
     try {
-      await axios.put(
-        `${BACKEND_URL}/inventories/${this.formValues._id}`,
+      await this.inventoryService.putInventory(
+        this.formValues._id,
         this.updateInventoryForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);

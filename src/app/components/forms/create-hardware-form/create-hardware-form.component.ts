@@ -6,11 +6,10 @@ import {
   stringValidator,
 } from '../../../utils/validators';
 import { HotToastService } from '@ngneat/hot-toast';
-import axios from 'axios';
-import { BACKEND_URL } from '../../../utils/constants';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
 import { HARDWARE_PRIORITIES } from '../../../../models/HardwareModel';
+import { HardwareService } from '../../../services/hardware.service';
 
 @Component({
   selector: 'app-create-hardware-form',
@@ -43,7 +42,10 @@ export class CreateHardwareFormComponent {
     ]),
   });
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private hardwareService: HardwareService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formId']) {
@@ -58,7 +60,7 @@ export class CreateHardwareFormComponent {
   onSubmit = async () => {
     this.sendingForm = true;
     try {
-      await axios.post(`${BACKEND_URL}/hardwares`, this.newHardwareForm.value);
+      await this.hardwareService.postHardware(this.newHardwareForm.value);
       this.toast.success('Equipo añadido');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newHardwareForm.reset();
