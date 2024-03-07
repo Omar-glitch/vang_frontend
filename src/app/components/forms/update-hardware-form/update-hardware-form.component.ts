@@ -1,7 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { BACKEND_URL } from '../../../utils/constants';
 import getErrorMessage from '../../../utils/errors';
-import axios from 'axios';
 import deepEqual from 'deep-equal';
 import {
   errorOf,
@@ -16,6 +14,7 @@ import {
 } from '../../../../models/HardwareModel';
 import { HotToastService } from '@ngneat/hot-toast';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HardwareService } from '../../../services/hardware.service';
 
 @Component({
   selector: 'app-update-hardware-form',
@@ -50,7 +49,10 @@ export class UpdateHardwareFormComponent {
   btnCloseModalId = '';
   sendingForm = false;
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private hardwareService: HardwareService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
@@ -80,8 +82,8 @@ export class UpdateHardwareFormComponent {
     }
     this.sendingForm = true;
     try {
-      await axios.put(
-        `${BACKEND_URL}/hardwares/${this.formValues._id}`,
+      await this.hardwareService.putHardware(
+        this.formValues._id,
         this.updateHardwareForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);

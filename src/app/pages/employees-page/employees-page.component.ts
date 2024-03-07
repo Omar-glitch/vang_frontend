@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DEFAULT_EMPLOYEE, EmployeeModel } from '../../../models/EmployeeModel';
-import axios from 'axios';
-import { BACKEND_URL } from '../../utils/constants';
 import getErrorMessage from '../../utils/errors';
 import { refreshFlowbite } from '../../utils/flowbite';
 import copy from 'copy-to-clipboard';
@@ -13,6 +11,7 @@ import { LoadingTableComponent } from '../../components/tableStates/loading-tabl
 import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
 import { objectIdToInputDate } from '../../utils/texts';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-employees-page',
@@ -35,7 +34,10 @@ export class EmployeesPageComponent {
   loading = true;
   error: string | undefined;
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private employeeService: EmployeeService
+  ) {}
 
   objectIdDate = objectIdToInputDate;
 
@@ -51,7 +53,7 @@ export class EmployeesPageComponent {
   getEmployees = async () => {
     try {
       this.error = undefined;
-      const employees = await axios.get(`${BACKEND_URL}/employees`);
+      const employees = await this.employeeService.getEmployees();
       this.employees = employees.data;
       this.loading = false;
       refreshFlowbite(250);
@@ -70,7 +72,7 @@ export class EmployeesPageComponent {
     const confirmed = confirm('¿Estas seguro de eliminar este empleado?');
     if (!confirmed) return;
     try {
-      await axios.delete(`${BACKEND_URL}/employees/${id}`);
+      await this.employeeService.deleteEmployee(id);
       this.toast.success('Empleado eliminado');
       this.refreshPage();
     } catch (e) {

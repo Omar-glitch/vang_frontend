@@ -6,11 +6,10 @@ import {
   stringValidator,
 } from '../../../utils/validators';
 import { HotToastService } from '@ngneat/hot-toast';
-import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
-import { BACKEND_URL } from '../../../utils/constants';
 import { EMPLOYEE_ROLES } from '../../../../models/EmployeeModel';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-create-employee-form',
@@ -59,7 +58,10 @@ export class CreateEmployeeFormComponent {
     ]),
   });
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private employeeService: EmployeeService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formId']) {
@@ -74,7 +76,7 @@ export class CreateEmployeeFormComponent {
   onSubmit = async () => {
     this.sendingForm = true;
     try {
-      await axios.post(`${BACKEND_URL}/employees`, this.newEmployeeForm.value);
+      await this.employeeService.postEmployee(this.newEmployeeForm.value);
       this.toast.success('Empleado añadido');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newEmployeeForm.reset();

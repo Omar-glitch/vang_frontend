@@ -12,10 +12,9 @@ import {
 } from '../../../utils/validators';
 import { HotToastService } from '@ngneat/hot-toast';
 import deepEqual from 'deep-equal';
-import axios from 'axios';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
 import getErrorMessage from '../../../utils/errors';
-import { BACKEND_URL } from '../../../utils/constants';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-update-employee-form',
@@ -67,7 +66,10 @@ export class UpdateEmployeeFormComponent {
   btnCloseModalId = '';
   sendingForm = false;
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private employeeService: EmployeeService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
@@ -98,8 +100,8 @@ export class UpdateEmployeeFormComponent {
     }
     this.sendingForm = true;
     try {
-      await axios.put(
-        `${BACKEND_URL}/employees/${this.formValues._id}`,
+      await this.employeeService.putEmployee(
+        this.formValues._id,
         this.updateEmployeeForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);

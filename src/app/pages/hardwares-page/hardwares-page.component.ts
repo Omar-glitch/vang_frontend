@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import axios from 'axios';
-import { BACKEND_URL } from '../../utils/constants';
 import getErrorMessage from '../../utils/errors';
 import { DEFAULT_HARDWARE, HardwareModel } from '../../../models/HardwareModel';
 import { refreshFlowbite } from '../../utils/flowbite';
@@ -13,6 +11,7 @@ import { RouterLink } from '@angular/router';
 import { LoadingTableComponent } from '../../components/tableStates/loading-table/loading-table.component';
 import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
+import { HardwareService } from '../../services/hardware.service';
 
 @Component({
   selector: 'app-hardwares-page',
@@ -35,7 +34,10 @@ export class HardwaresPageComponent {
   loading = true;
   error: string | undefined;
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private hardwareService: HardwareService
+  ) {}
 
   objectIdDate = objectIdToInputDate;
 
@@ -51,7 +53,7 @@ export class HardwaresPageComponent {
   getHardwares = async () => {
     try {
       this.error = undefined;
-      const hardwares = await axios.get(`${BACKEND_URL}/hardwares`);
+      const hardwares = await this.hardwareService.getHardwares();
       this.hardwares = hardwares.data;
       this.loading = false;
       refreshFlowbite(250);
@@ -70,7 +72,7 @@ export class HardwaresPageComponent {
     const confirmed = confirm('¿Estas seguro de eliminar este equipo?');
     if (!confirmed) return;
     try {
-      await axios.delete(`${BACKEND_URL}/hardwares/${id}`);
+      await this.hardwareService.deleteHardware(id);
       this.toast.success('Equipo eliminado');
       this.refreshPage();
     } catch (e) {

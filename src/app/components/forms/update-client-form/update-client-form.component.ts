@@ -1,13 +1,12 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import axios from 'axios';
 import { errorOf, stringValidator } from '../../../utils/validators';
 import { ClientModel, DEFAULT_CLIENT } from '../../../../models/ClientModel';
 import deepEqual from 'deep-equal';
 import { HotToastService } from '@ngneat/hot-toast';
 import getErrorMessage from '../../../utils/errors';
 import { clickCloseBtnModal } from '../../../utils/closeModal';
-import { BACKEND_URL } from '../../../utils/constants';
+import { ClientService } from '../../../services/client.service';
 
 @Component({
   selector: 'app-update-client-form',
@@ -31,7 +30,10 @@ export class UpdateClientFormComponent {
   btnCloseModalId = '';
   sendingForm = false;
 
-  constructor(private toast: HotToastService) {}
+  constructor(
+    private toast: HotToastService,
+    private clientService: ClientService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formValues']) {
@@ -58,8 +60,8 @@ export class UpdateClientFormComponent {
     }
     this.sendingForm = true;
     try {
-      await axios.put(
-        `${BACKEND_URL}/clients/${this.formValues._id}`,
+      await this.clientService.putClient(
+        this.formValues._id,
         this.updateClientForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);
