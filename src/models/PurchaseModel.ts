@@ -7,7 +7,7 @@ export type PurchaseModel = {
   cost: number;
 };
 
-export const DEFAULT_CLIENT: PurchaseModel = {
+export const DEFAULT_PURCHASE: PurchaseModel = {
   _id: '',
   type: 'equipo',
   description: '',
