@@ -1,5 +1,5 @@
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-  <div class="overflow-hidden mx-auto max-w-screen-xl px-4 lg:px-12">
+  <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
     <!-- Start coding here -->
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg">
       <div
@@ -297,6 +297,14 @@
                     <li>
                       <button
                         class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        (click)="generateBill(repair._id)"
+                      >
+                        Regenerar factura
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         (click)="setEditRepairValues(repair)"
                         attr.data-modal-target="{{ updateRepairFormId }}"
                         attr.data-modal-show="{{ updateRepairFormId }}"
@@ -335,6 +343,12 @@
           }}</span>
           {{ repairs.length === 1 ? "reparación" : "reparaciones" }}
         </span>
+        <p class="text-sm font-normal text-gray-500 dark:text-gray-400 py-2.5">
+          Precio total:
+          <span class="font-semibold text-gray-900 dark:text-white">
+            {{ totalPrice.toLocaleString() }} L
+          </span>
+        </p>
       </nav>
     </div>
   </div>

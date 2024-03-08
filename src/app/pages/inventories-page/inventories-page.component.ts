@@ -14,6 +14,7 @@ import { ErrorTableComponent } from '../../components/tableStates/error-table/er
 import { CreateInventoryFormComponent } from '../../components/forms/create-inventory-form/create-inventory-form.component';
 import { UpdateInventoryFormComponent } from '../../components/forms/update-inventory-form/update-inventory-form.component';
 import { InventoryService } from '../../services/inventory.service';
+import { BuyInventoryFormComponent } from '../../components/forms/buy-inventory-form/buy-inventory-form.component';
 
 @Component({
   selector: 'app-inventories-page',
@@ -25,14 +26,18 @@ import { InventoryService } from '../../services/inventory.service';
     LoadingTableComponent,
     EmptyTableComponent,
     ErrorTableComponent,
+    BuyInventoryFormComponent,
   ],
   templateUrl: './inventories-page.component.html',
 })
 export class InventoriesPageComponent {
   inventories: InventoryModel[] = [];
   inventoryUpdateFormValues: InventoryModel = DEFAULT_INVENTORY;
+  inventoryBuyId = '';
+  inventoryBuyName = '';
   createInventoryFormId = 'createInventoryFormId';
   updateInventoryFormId = 'updateInventoryFormId';
+  updateBuyInventoryFormId = 'updateBuyInventoryFormId';
   loading = true;
   error: string | undefined;
 
@@ -66,6 +71,11 @@ export class InventoriesPageComponent {
 
   setEditInventoryValues = (inventory: InventoryModel) => {
     this.inventoryUpdateFormValues = inventory;
+  };
+
+  setBuyId = (id: string, name: string) => {
+    this.inventoryBuyId = id;
+    this.inventoryBuyName = name;
   };
 
   deleteInventory = async (id: string) => {

@@ -12,6 +12,7 @@ import { LoadingTableComponent } from '../../components/tableStates/loading-tabl
 import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
 import { HardwareService } from '../../services/hardware.service';
+import { BuyHardwareFormComponent } from '../../components/forms/buy-hardware-form/buy-hardware-form.component';
 
 @Component({
   selector: 'app-hardwares-page',
@@ -23,14 +24,18 @@ import { HardwareService } from '../../services/hardware.service';
     LoadingTableComponent,
     EmptyTableComponent,
     ErrorTableComponent,
+    BuyHardwareFormComponent,
   ],
   templateUrl: './hardwares-page.component.html',
 })
 export class HardwaresPageComponent {
   hardwares: HardwareModel[] = [];
   hardwareUpdateFormValues: HardwareModel = DEFAULT_HARDWARE;
+  hardwareBuyId = '';
+  hardwareBuyName = '';
   createHardwareFormId = 'createHardwareFormId';
   updateHardwareFormId = 'updateHardwareFormId';
+  updateBuyHardwareFormId = 'updateBuyHardwareFormId';
   loading = true;
   error: string | undefined;
 
@@ -66,6 +71,11 @@ export class HardwaresPageComponent {
 
   setEditHardwareValues = (hardware: HardwareModel) => {
     this.hardwareUpdateFormValues = hardware;
+  };
+
+  setBuyId = (id: string, name: string) => {
+    this.hardwareBuyId = id;
+    this.hardwareBuyName = name;
   };
 
   deleteHardware = async (id: string) => {

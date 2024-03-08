@@ -24,6 +24,10 @@ export class InventoryService {
     return axios.put(this.url + id, inventory);
   };
 
+  putAddInventory = async (id: string, inventory: any) => {
+    return axios.put(`${this.url}add/${id}`, inventory);
+  };
+
   deleteInventory = async (id: string) => {
     return axios.delete(this.url + id);
   };

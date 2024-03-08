@@ -38,9 +38,9 @@ export class CreateInventoryFormComponent {
         list: INVENTORY_TYPES,
       }),
     ]),
-    stock: new FormControl(0, [numberValidator({ min: 1, max: 2_500 })]),
+    stock: new FormControl(0, [numberValidator({ min: 1, max: 80 })]),
     cost: new FormControl(0, [numberValidator({ min: 20, max: 120_000 })]),
-    min: new FormControl(0, [numberValidator({ min: 0, max: 2_500 })]),
+    min: new FormControl(0, [numberValidator({ min: 0, max: 2500 })]),
   });
 
   constructor(
