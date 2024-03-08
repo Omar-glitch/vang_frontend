@@ -21,10 +21,6 @@ export class BillService {
     return axios.get(this.url);
   };
 
-  postBill = async (bill: any) => {
-    return axios.post(this.url, bill);
-  };
-
   putBill = async (id: string, bill: any) => {
     return axios.put(this.url + id, bill);
   };

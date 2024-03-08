@@ -24,6 +24,10 @@ export class HardwareService {
     return axios.put(this.url + id, hardware);
   };
 
+  putAddHardware = async (id: string, inventory: any) => {
+    return axios.put(`${this.url}add/${id}`, inventory);
+  };
+
   deleteHardware = async (id: string) => {
     return axios.delete(this.url + id);
   };

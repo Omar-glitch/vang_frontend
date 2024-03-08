@@ -8,8 +8,9 @@ import { refreshFlowbite } from '../../utils/flowbite';
 import { objectIdToInputDate } from '../../utils/texts';
 import { BillService } from '../../services/bill.service';
 import { HotToastService } from '@ngneat/hot-toast';
-import { BillModel } from '../../../models/BillModel';
+import { BillModel, DEFAULT_BILL } from '../../../models/BillModel';
 import copy from 'copy-to-clipboard';
+import { UpdateBillFormComponent } from '../../components/forms/update-bill-form/update-bill-form.component';
 
 @Component({
   selector: 'app-bills-page',
@@ -19,11 +20,14 @@ import copy from 'copy-to-clipboard';
     LoadingTableComponent,
     EmptyTableComponent,
     ErrorTableComponent,
+    UpdateBillFormComponent,
   ],
   templateUrl: './bills-page.component.html',
 })
 export class BillsPageComponent {
   bills: BillModel[] = [];
+  billUpdateFormValues: BillModel = DEFAULT_BILL;
+  updateBillFormId = 'updateBillFormId';
   loading = true;
   error: undefined | string;
   totalAmount = 0;
@@ -57,6 +61,10 @@ export class BillsPageComponent {
       this.error = errorMessage;
       this.toast.error(errorMessage);
     }
+  };
+
+  setEditBillValues = (bill: BillModel) => {
+    this.billUpdateFormValues = bill;
   };
 
   deleteBill = async (id: string) => {

@@ -32,7 +32,7 @@ export class CreateHardwareFormComponent {
       stringValidator({ minLength: 8, maxLength: 54 }),
     ]),
     cost: new FormControl(0, [numberValidator({ min: 20, max: 120_000 })]),
-    stock: new FormControl(0, [numberValidator({ min: 1, max: 2500 })]),
+    stock: new FormControl(0, [numberValidator({ min: 1, max: 80 })]),
     priority: new FormControl(HARDWARE_PRIORITIES[0], [
       stringValidator({
         minLength: 2,

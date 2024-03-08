@@ -32,6 +32,7 @@ export class RepairsPageComponent {
   updateRepairFormId = 'updateRepairFormId';
   loading = true;
   error: string | undefined;
+  totalPrice = 0;
 
   constructor(
     private toast: HotToastService,
@@ -52,6 +53,7 @@ export class RepairsPageComponent {
       this.error = undefined;
       const repairs = await this.repairService.getRepairs();
       this.repairs = repairs.data;
+      this.totalPrice = this.repairService.getSumPrice(repairs.data);
       this.loading = false;
       refreshFlowbite(DEFAULT_FLOWBITE_TIME);
     } catch (e) {
@@ -63,6 +65,15 @@ export class RepairsPageComponent {
 
   setEditRepairValues = (repair: RepairModel) => {
     this.repairUpdateFormValues = repair;
+  };
+
+  generateBill = async (id: string) => {
+    try {
+      await this.repairService.generateBill(id);
+      this.toast.success('Factura regenerada');
+    } catch (e) {
+      this.toast.error(getErrorMessage(e));
+    }
   };
 
   deleteRepair = async (id: string) => {
