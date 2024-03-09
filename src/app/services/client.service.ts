@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BACKEND_URL } from '../utils/constants';
+import { getQueries } from '../utils/texts';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,9 @@ export class ClientService {
     return axios.get(this.url + id);
   };
 
-  getClients = async (filter?: any) => {
-    return axios.get(this.url);
+  getClients = async (filter?: Record<string, string>) => {
+    let q = getQueries(filter);
+    return axios.get(this.url + q);
   };
 
   postClient = async (client: any) => {

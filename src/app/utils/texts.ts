@@ -64,3 +64,13 @@ export const validateEmail = (email: string) => {
 export const removeAccents = (str: string) => {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
+
+export const getQueries = (filter?: Record<string, string>) => {
+  let q = '';
+  if (filter) {
+    Object.keys(filter).map((k) => {
+      q += q.length === 0 ? `?${k}=${filter[k]}` : `&${k}=${filter[k]}`;
+    });
+  }
+  return q;
+};

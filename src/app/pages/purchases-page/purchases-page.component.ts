@@ -10,6 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingTableComponent } from '../../components/tableStates/loading-table/loading-table.component';
 import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
+import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
+import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-purchases-page',
@@ -19,6 +22,8 @@ import { ErrorTableComponent } from '../../components/tableStates/error-table/er
     LoadingTableComponent,
     EmptyTableComponent,
     ErrorTableComponent,
+    SearchInputComponent,
+    RemoveFilterButtonComponent,
   ],
   templateUrl: './purchases-page.component.html',
 })
@@ -27,9 +32,11 @@ export class PurchasesPageComponent {
   loading = true;
   error: undefined | string;
   totalCost = 0;
+  currentFilter: Record<string, string> = {};
 
   constructor(
     private toast: HotToastService,
+    private route: ActivatedRoute,
     private purchaseService: PurchaseService
   ) {}
 
@@ -47,7 +54,9 @@ export class PurchasesPageComponent {
   getPurchases = async () => {
     try {
       this.error = undefined;
-      const purchases = await this.purchaseService.getPurchases();
+      const purchases = await this.purchaseService.getPurchases(
+        this.currentFilter
+      );
       this.purchases = purchases.data;
       this.totalCost = this.purchaseService.getSumCost(purchases.data);
       this.loading = false;
@@ -72,6 +81,12 @@ export class PurchasesPageComponent {
   };
 
   ngOnInit() {
-    this.getPurchases();
+    this.route.queryParamMap.subscribe((params) => {
+      this.currentFilter = {};
+      params.keys.map((k) => {
+        this.currentFilter[k] = params.get(k) as string;
+      });
+      this.getPurchases();
+    });
   }
 }

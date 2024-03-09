@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
 import { EmptyTableComponent } from '../../components/tableStates/empty-table/empty-table.component';
 import { LoadingTableComponent } from '../../components/tableStates/loading-table/loading-table.component';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import getErrorMessage from '../../utils/errors';
 import { DEFAULT_REPAIR, RepairModel } from '../../../models/RepairModel';
 import { DEFAULT_FLOWBITE_TIME, refreshFlowbite } from '../../utils/flowbite';
@@ -11,6 +11,8 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { CreateRepairFormComponent } from '../../components/forms/create-repair-form/create-repair-form.component';
 import { UpdateRepairFormComponent } from '../../components/forms/update-repair-form/update-repair-form.component';
 import { RepairService } from '../../services/repair.service';
+import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
+import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
 
 @Component({
   selector: 'app-repairs-page',
@@ -22,6 +24,8 @@ import { RepairService } from '../../services/repair.service';
     LoadingTableComponent,
     EmptyTableComponent,
     ErrorTableComponent,
+    SearchInputComponent,
+    RemoveFilterButtonComponent,
   ],
   templateUrl: './repairs-page.component.html',
 })
@@ -33,9 +37,11 @@ export class RepairsPageComponent {
   loading = true;
   error: string | undefined;
   totalPrice = 0;
+  currentFilter: Record<string, string> = {};
 
   constructor(
     private toast: HotToastService,
+    private route: ActivatedRoute,
     private repairService: RepairService
   ) {}
 
@@ -51,7 +57,7 @@ export class RepairsPageComponent {
   getRepairs = async () => {
     try {
       this.error = undefined;
-      const repairs = await this.repairService.getRepairs();
+      const repairs = await this.repairService.getRepairs(this.currentFilter);
       this.repairs = repairs.data;
       this.totalPrice = this.repairService.getSumPrice(repairs.data);
       this.loading = false;
@@ -89,6 +95,12 @@ export class RepairsPageComponent {
   };
 
   ngOnInit() {
-    this.getRepairs();
+    this.route.queryParamMap.subscribe((params) => {
+      this.currentFilter = {};
+      params.keys.map((k) => {
+        this.currentFilter[k] = params.get(k) as string;
+      });
+      this.getRepairs();
+    });
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BACKEND_URL } from '../utils/constants';
 import { PurchaseModel } from '../../models/PurchaseModel';
+import { getQueries } from '../utils/texts';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,9 @@ export class PurchaseService {
     return purchases.reduce((prev, curr) => prev + curr.cost, 0);
   };
 
-  getPurchases = async (filter?: any) => {
-    return axios.get(this.url);
+  getPurchases = async (filter?: Record<string, string>) => {
+    let q = getQueries(filter);
+    return axios.get(this.url + q);
   };
 
   postPurchase = async (purchase: any) => {
