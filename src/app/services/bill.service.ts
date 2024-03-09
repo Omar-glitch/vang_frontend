@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BACKEND_URL } from '../utils/constants';
 import { BillModel } from '../../models/BillModel';
+import { getQueries } from '../utils/texts';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,9 @@ export class BillService {
     return bills.reduce((prev, curr) => prev + curr.amount, 0);
   };
 
-  getBills = async (filter?: any) => {
-    return axios.get(this.url);
+  getBills = async (filter?: Record<string, string>) => {
+    let q = getQueries(filter);
+    return axios.get(this.url + q);
   };
 
   putBill = async (id: string, bill: any) => {

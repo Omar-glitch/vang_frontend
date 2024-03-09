@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DEFAULT_EMPLOYEE, EmployeeModel } from '../../../models/EmployeeModel';
 import getErrorMessage from '../../utils/errors';
 import { refreshFlowbite } from '../../utils/flowbite';
@@ -12,6 +12,8 @@ import { EmptyTableComponent } from '../../components/tableStates/empty-table/em
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
 import { objectIdToInputDate } from '../../utils/texts';
 import { EmployeeService } from '../../services/employee.service';
+import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
+import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
 
 @Component({
   selector: 'app-employees-page',
@@ -23,6 +25,8 @@ import { EmployeeService } from '../../services/employee.service';
     LoadingTableComponent,
     EmptyTableComponent,
     ErrorTableComponent,
+    SearchInputComponent,
+    RemoveFilterButtonComponent,
   ],
   templateUrl: './employees-page.component.html',
 })
@@ -33,9 +37,11 @@ export class EmployeesPageComponent {
   updateEmployeeFormId = 'updateEmployeeFormId';
   loading = true;
   error: string | undefined;
+  currentFilter: Record<string, string> = {};
 
   constructor(
     private toast: HotToastService,
+    private route: ActivatedRoute,
     private employeeService: EmployeeService
   ) {}
 
@@ -53,7 +59,9 @@ export class EmployeesPageComponent {
   getEmployees = async () => {
     try {
       this.error = undefined;
-      const employees = await this.employeeService.getEmployees();
+      const employees = await this.employeeService.getEmployees(
+        this.currentFilter
+      );
       this.employees = employees.data;
       this.loading = false;
       refreshFlowbite(250);
@@ -81,6 +89,12 @@ export class EmployeesPageComponent {
   };
 
   ngOnInit() {
-    this.getEmployees();
+    this.route.queryParamMap.subscribe((params) => {
+      this.currentFilter = {};
+      params.keys.map((k) => {
+        this.currentFilter[k] = params.get(k) as string;
+      });
+      this.getEmployees();
+    });
   }
 }

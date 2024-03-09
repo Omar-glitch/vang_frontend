@@ -11,6 +11,9 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { BillModel, DEFAULT_BILL } from '../../../models/BillModel';
 import copy from 'copy-to-clipboard';
 import { UpdateBillFormComponent } from '../../components/forms/update-bill-form/update-bill-form.component';
+import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
+import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bills-page',
@@ -21,6 +24,8 @@ import { UpdateBillFormComponent } from '../../components/forms/update-bill-form
     EmptyTableComponent,
     ErrorTableComponent,
     UpdateBillFormComponent,
+    SearchInputComponent,
+    RemoveFilterButtonComponent,
   ],
   templateUrl: './bills-page.component.html',
 })
@@ -31,9 +36,11 @@ export class BillsPageComponent {
   loading = true;
   error: undefined | string;
   totalAmount = 0;
+  currentFilter: Record<string, string> = {};
 
   constructor(
     private toast: HotToastService,
+    private route: ActivatedRoute,
     private billService: BillService
   ) {}
 
@@ -51,7 +58,7 @@ export class BillsPageComponent {
   getBills = async () => {
     try {
       this.error = undefined;
-      const bills = await this.billService.getBills();
+      const bills = await this.billService.getBills(this.currentFilter);
       this.bills = bills.data;
       this.totalAmount = this.billService.getSumPrice(bills.data);
       this.loading = false;
@@ -80,6 +87,12 @@ export class BillsPageComponent {
   };
 
   ngOnInit() {
-    this.getBills();
+    this.route.queryParamMap.subscribe((params) => {
+      this.currentFilter = {};
+      params.keys.map((k) => {
+        this.currentFilter[k] = params.get(k) as string;
+      });
+      this.getBills();
+    });
   }
 }

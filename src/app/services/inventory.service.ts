@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { BACKEND_URL } from '../utils/constants';
+import { getQueries } from '../utils/texts';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,9 @@ export class InventoryService {
     return axios.get(this.url + id);
   };
 
-  getInventories = async (filter?: any) => {
-    return axios.get(this.url);
+  getInventories = async (filter?: Record<string, string>) => {
+    let q = getQueries(filter);
+    return axios.get(this.url + q);
   };
 
   postInventory = async (inventory: any) => {
