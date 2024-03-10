@@ -15,6 +15,7 @@ import { HardwareService } from '../../services/hardware.service';
 import { BuyHardwareFormComponent } from '../../components/forms/buy-hardware-form/buy-hardware-form.component';
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
+import { HardwareFilterModalComponent } from '../../components/modals/hardware-filter-modal/hardware-filter-modal.component';
 
 @Component({
   selector: 'app-hardwares-page',
@@ -29,6 +30,7 @@ import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filt
     BuyHardwareFormComponent,
     SearchInputComponent,
     RemoveFilterButtonComponent,
+    HardwareFilterModalComponent,
   ],
   templateUrl: './hardwares-page.component.html',
 })
@@ -40,6 +42,7 @@ export class HardwaresPageComponent {
   createHardwareFormId = 'createHardwareFormId';
   updateHardwareFormId = 'updateHardwareFormId';
   updateBuyHardwareFormId = 'updateBuyHardwareFormId';
+  filterHardwareFormId = 'filterHardwareFormId';
   loading = true;
   error: string | undefined;
   currentFilter: Record<string, string> = {};

@@ -1,0 +1,193 @@
+<div
+  id="{{ formId }}"
+  tabindex="-1"
+  aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+      >
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          Filtrar equipos
+        </h3>
+        <button
+          type="button"
+          [id]="btnCloseModalId"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          attr.data-modal-toggle="{{ formId }}"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Cerrar modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <form
+        class="p-4 md:p-5"
+        [formGroup]="hardwareFilterForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="grid gap-4 mb-4 grid-cols-2">
+          <div>
+            <label
+              for="minCost-filter"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Costo mínimo</label
+            >
+            <input
+              type="number"
+              formControlName="minCost"
+              id="minCost-filter"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Costo mínimo"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="maxCost-filter"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Costo máximo</label
+            >
+            <input
+              type="number"
+              formControlName="maxCost"
+              id="maxCost-filter"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Costo máximo"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="minStock-filter"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Stock mínimo</label
+            >
+            <input
+              type="number"
+              formControlName="minStock"
+              id="minStock-filter"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Stock mínimo"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="maxStock-filter"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Stock máximo</label
+            >
+            <input
+              type="number"
+              formControlName="maxStock"
+              id="maxStock-filter"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              placeholder="Stock máximo"
+              required=""
+            />
+          </div>
+          <div>
+            <label
+              for="priority-filter"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Prioridad</label
+            >
+            <select
+              id="priority-filter"
+              formControlName="priority"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            >
+              <option value="">n/a</option>
+
+              @for (priority of this.hardwarePriorities; track $index) {
+              <option value="{{ priority }}">{{ priority }}</option>
+              }
+            </select>
+          </div>
+          <div>
+            <label
+              for="order-filter"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Orden</label
+            >
+            <select
+              id="order-filter"
+              formControlName="order"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            >
+              <option value="">n/a</option>
+              <option value="desc">Antiguos primero</option>
+              <option value="asc">Recientes primero</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex">
+          <button
+            type="submit"
+            class="text-white inline-flex items-center mr-3 disabled:cursor-not-allowed bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <svg
+              stroke="currentColor"
+              fill="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              class="inline w-4 h-4 me-3 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+              ></path>
+            </svg>
+            Filtrar
+          </button>
+          <button
+            type="button"
+            title="Reiniciar filtro"
+            (click)="refreshFilter()"
+            class="flex items-center justify-center p-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg toggle-mobile-view hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 dark:bg-gray-700 focus:outline-none dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600"
+          >
+            <span class="sr-only">Reiniciar</span
+            ><svg
+              stroke="currentColor"
+              fill="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              class="w-5 h-5"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="none"
+                stroke-linecap="round"
+                stroke-miterlimit="10"
+                stroke-width="32"
+                d="m400 148-21.12-24.57A191.43 191.43 0 0 0 240 64C134 64 48 150 48 256s86 192 192 192a192.09 192.09 0 0 0 181.07-128"
+              ></path>
+              <path
+                d="M464 97.42V208a16 16 0 0 1-16 16H337.42c-14.26 0-21.4-17.23-11.32-27.31L436.69 86.1C446.77 76 464 83.16 464 97.42z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { objectIdToInputDate } from '../../utils/texts';
 import { EmployeeService } from '../../services/employee.service';
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
+import { EmployeeFilterModalComponent } from '../../components/modals/employee-filter-modal/employee-filter-modal.component';
 
 @Component({
   selector: 'app-employees-page',
@@ -27,6 +28,7 @@ import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filt
     ErrorTableComponent,
     SearchInputComponent,
     RemoveFilterButtonComponent,
+    EmployeeFilterModalComponent,
   ],
   templateUrl: './employees-page.component.html',
 })
@@ -35,6 +37,7 @@ export class EmployeesPageComponent {
   employeeUpdateFormValues: EmployeeModel = DEFAULT_EMPLOYEE;
   createEmployeeFormId = 'createEmployeeFormId';
   updateEmployeeFormId = 'updateEmployeeFormId';
+  filterEmployeeFormId = 'filterEmployeeFormId';
   loading = true;
   error: string | undefined;
   currentFilter: Record<string, string> = {};

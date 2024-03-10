@@ -13,7 +13,8 @@ import copy from 'copy-to-clipboard';
 import { UpdateBillFormComponent } from '../../components/forms/update-bill-form/update-bill-form.component';
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { BillFilterModalComponent } from '../../components/modals/bill-filter-modal/bill-filter-modal.component';
 
 @Component({
   selector: 'app-bills-page',
@@ -26,6 +27,8 @@ import { ActivatedRoute } from '@angular/router';
     UpdateBillFormComponent,
     SearchInputComponent,
     RemoveFilterButtonComponent,
+    BillFilterModalComponent,
+    RouterLink,
   ],
   templateUrl: './bills-page.component.html',
 })
@@ -33,6 +36,7 @@ export class BillsPageComponent {
   bills: BillModel[] = [];
   billUpdateFormValues: BillModel = DEFAULT_BILL;
   updateBillFormId = 'updateBillFormId';
+  filterBillFormId = 'filterBillFormId';
   loading = true;
   error: undefined | string;
   totalAmount = 0;
