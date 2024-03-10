@@ -45,3 +45,7 @@
   --shadow-channel: 61, 58, 58;
   --color-scheme: dark;
 }
+
+input {
+  color-scheme: dark;
+}

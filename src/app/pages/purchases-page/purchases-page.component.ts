@@ -13,6 +13,7 @@ import { ErrorTableComponent } from '../../components/tableStates/error-table/er
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
 import { ActivatedRoute } from '@angular/router';
+import { PurchaseFilterModalComponent } from '../../components/modals/purchase-filter-modal/purchase-filter-modal.component';
 
 @Component({
   selector: 'app-purchases-page',
@@ -24,6 +25,7 @@ import { ActivatedRoute } from '@angular/router';
     ErrorTableComponent,
     SearchInputComponent,
     RemoveFilterButtonComponent,
+    PurchaseFilterModalComponent,
   ],
   templateUrl: './purchases-page.component.html',
 })
@@ -33,6 +35,7 @@ export class PurchasesPageComponent {
   error: undefined | string;
   totalCost = 0;
   currentFilter: Record<string, string> = {};
+  filterPurchaseFormId = 'filterPurchaseFormId';
 
   constructor(
     private toast: HotToastService,

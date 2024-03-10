@@ -14,11 +14,7 @@ export class SearchInputComponent {
   @Input({ required: true }) name: string = '';
   @Input({ required: true }) placeholder!: string;
 
-  constructor(
-    private toast: HotToastService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private toast: HotToastService, private router: Router) {}
 
   searchForm = new FormGroup({
     q: new FormControl('', [stringValidator({ minLength: 2, maxLength: 16 })]),
@@ -33,10 +29,4 @@ export class SearchInputComponent {
       queryParams: { q: this.searchForm.value.q },
     });
   };
-
-  // ngOnInit() {
-  //   this.route.queryParamMap.subscribe((params) => {
-  //     if (params.keys.length) console.log('tiene params');
-  //   });
-  // }
 }

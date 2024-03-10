@@ -12,9 +12,10 @@ import { EmptyTableComponent } from '../../components/tableStates/empty-table/em
 import { ErrorTableComponent } from '../../components/tableStates/error-table/error-table.component';
 import { objectIdToInputDate } from '../../utils/texts';
 import { ClientService } from '../../services/client.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
+import { ClientFilterModalComponent } from '../../components/modals/client-filter-modal/client-filter-modal.component';
 
 @Component({
   selector: 'app-client-page',
@@ -27,6 +28,8 @@ import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filt
     ErrorTableComponent,
     SearchInputComponent,
     RemoveFilterButtonComponent,
+    ClientFilterModalComponent,
+    RouterLink,
   ],
   templateUrl: './client-page.component.html',
 })
@@ -35,6 +38,7 @@ export class ClientPageComponent {
   clientUpdateFormValues: ClientModel = DEFAULT_CLIENT;
   createClientFormId = 'createClientFormId';
   updateClientFormId = 'updateClientFormId';
+  filterClientFormId = 'filterClientFormId';
   loading = true;
   error: undefined | string;
   currentFilter: Record<string, string> = {};

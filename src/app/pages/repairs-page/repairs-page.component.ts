@@ -13,6 +13,7 @@ import { UpdateRepairFormComponent } from '../../components/forms/update-repair-
 import { RepairService } from '../../services/repair.service';
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
+import { RepairFilterModalComponent } from '../../components/modals/repair-filter-modal/repair-filter-modal.component';
 
 @Component({
   selector: 'app-repairs-page',
@@ -26,6 +27,7 @@ import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filt
     ErrorTableComponent,
     SearchInputComponent,
     RemoveFilterButtonComponent,
+    RepairFilterModalComponent,
   ],
   templateUrl: './repairs-page.component.html',
 })
@@ -34,6 +36,7 @@ export class RepairsPageComponent {
   repairUpdateFormValues: RepairModel = DEFAULT_REPAIR;
   createRepairFormId = 'createRepairFormId';
   updateRepairFormId = 'updateRepairFormId';
+  filterRepairFormId = 'filterRepairFormId';
   loading = true;
   error: string | undefined;
   totalPrice = 0;

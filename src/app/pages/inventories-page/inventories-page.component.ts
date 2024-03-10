@@ -17,6 +17,7 @@ import { InventoryService } from '../../services/inventory.service';
 import { BuyInventoryFormComponent } from '../../components/forms/buy-inventory-form/buy-inventory-form.component';
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
+import { InventoryFilterModalComponent } from '../../components/modals/inventory-filter-modal/inventory-filter-modal.component';
 
 @Component({
   selector: 'app-inventories-page',
@@ -31,6 +32,7 @@ import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filt
     BuyInventoryFormComponent,
     SearchInputComponent,
     RemoveFilterButtonComponent,
+    InventoryFilterModalComponent,
   ],
   templateUrl: './inventories-page.component.html',
 })
@@ -42,6 +44,7 @@ export class InventoriesPageComponent {
   createInventoryFormId = 'createInventoryFormId';
   updateInventoryFormId = 'updateInventoryFormId';
   updateBuyInventoryFormId = 'updateBuyInventoryFormId';
+  filterInventoryFormId = 'filterInventoryFormId';
   loading = true;
   error: string | undefined;
   currentFilter: Record<string, string> = {};
