@@ -22,6 +22,7 @@ export class InventoryFilterModalComponent {
     maxCost: new FormControl(0),
     type: new FormControl(''),
     order: new FormControl(''),
+    min: new FormControl(''),
   });
 
   constructor(private router: Router) {}

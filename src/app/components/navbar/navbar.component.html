@@ -1,7 +1,5 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-  <div
-    class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-  >
+  <div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
     <a
       routerLink="/"
       class="flex items-center justify-center space-x-2 rtl:space-x-reverse"
@@ -16,6 +14,7 @@
         Reps
       </span>
     </a>
+    <app-min-inventory-button class="ml-auto" />
     <button
       data-collapse-toggle="navbar-dropdown"
       [id]="DROPDOWN_BUTTON_ID"
@@ -47,7 +46,7 @@
       >
         <li>
           <a
-            href="#"
+            routerLink="/"
             class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
             aria-current="page"
             >Dashboard</a
