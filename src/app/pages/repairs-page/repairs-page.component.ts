@@ -14,6 +14,7 @@ import { RepairService } from '../../services/repair.service';
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
 import { RepairFilterModalComponent } from '../../components/modals/repair-filter-modal/repair-filter-modal.component';
+import { objectIdToInputDate } from '../../utils/texts';
 
 @Component({
   selector: 'app-repairs-page',
@@ -47,6 +48,8 @@ export class RepairsPageComponent {
     private route: ActivatedRoute,
     private repairService: RepairService
   ) {}
+
+  objectIdDate = objectIdToInputDate;
 
   copyText = (str: string) => {
     copy(str);

@@ -181,6 +181,14 @@
                     attr.aria-labelledby="{{ inventory._id }}-button"
                   >
                     <li>
+                      <a
+                        routerLink="/dashboard/repairs"
+                        [queryParams]="{ inventory: inventory.name }"
+                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Ver reparaciones</a
+                      >
+                    </li>
+                    <li>
                       <button
                         class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         (click)="setBuyId(inventory._id, inventory.name)"

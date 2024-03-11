@@ -36,6 +36,7 @@ export class PurchasesPageComponent {
   totalCost = 0;
   currentFilter: Record<string, string> = {};
   filterPurchaseFormId = 'filterPurchaseFormId';
+  modePurchaseModalId = 'modePurchaseModalId';
 
   constructor(
     private toast: HotToastService,

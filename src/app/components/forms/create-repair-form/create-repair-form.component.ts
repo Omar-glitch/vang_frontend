@@ -110,7 +110,7 @@ export class CreateRepairFormComponent {
     this.clientService.getClients().then((res) => {
       this.clients = res.data;
     });
-    this.employeeService.getEmployees().then((res) => {
+    this.employeeService.getEmployees({ role: 'reparador' }).then((res) => {
       this.employees = res.data;
     });
   }
