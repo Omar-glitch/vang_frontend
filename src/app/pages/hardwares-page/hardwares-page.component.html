@@ -123,6 +123,7 @@
           >
             <tr>
               <th scope="col" class="hidden px-4 py-3">ID</th>
+              <th scope="col" class="px-4 py-3">Fecha</th>
               <th scope="col" class="px-4 py-3">Nombre</th>
               <th scope="col" class="px-4 py-3">Descripción</th>
               <th scope="col" class="px-4 py-3">Stock</th>
@@ -147,6 +148,7 @@
                   {{ hardware._id }}
                 </p>
               </th>
+              <td class="px-4 py-3">{{ objectIdDate(hardware._id) }}</td>
               <td class="px-4 py-3">{{ hardware.name }}</td>
               <td class="px-4 py-3">{{ hardware.description }}</td>
               <td class="px-4 py-3">{{ hardware.stock }}</td>
