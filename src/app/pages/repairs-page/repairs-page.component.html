@@ -123,6 +123,7 @@
           >
             <tr>
               <th scope="col" class="hidden px-4 py-3">ID</th>
+              <th scope="col" class="px-4 py-3">Fecha</th>
               <th scope="col" class="px-4 py-3">Precio</th>
               <th scope="col" class="px-4 py-3">Descripción</th>
               <th scope="col" class="px-4 py-3">Estado</th>
@@ -150,6 +151,7 @@
                   {{ repair._id }}
                 </p>
               </th>
+              <td class="px-4 py-3">{{ objectIdDate(repair._id) }}</td>
               <td class="px-4 py-3">{{ repair.price }}</td>
               <td class="px-4 py-3">{{ repair.description }}</td>
               <td class="px-4 py-3">{{ repair.status }}</td>
@@ -197,6 +199,14 @@
                     class="py-1 text-sm text-gray-700 dark:text-gray-200"
                     attr.aria-labelledby="{{ repair._id }}-button"
                   >
+                    <li>
+                      <a
+                        routerLink="/dashboard/bills"
+                        [queryParams]="{ id_repair: repair._id }"
+                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Ver factura</a
+                      >
+                    </li>
                     <li>
                       <button
                         class="block py-2 px-4 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"

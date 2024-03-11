@@ -37,6 +37,7 @@ export class BillsPageComponent {
   billUpdateFormValues: BillModel = DEFAULT_BILL;
   updateBillFormId = 'updateBillFormId';
   filterBillFormId = 'filterBillFormId';
+  modeBillModalId = 'modeBillModalId';
   loading = true;
   error: undefined | string;
   totalAmount = 0;
