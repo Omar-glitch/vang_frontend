@@ -23,6 +23,7 @@ export class CreateInventoryFormComponent {
   btnCloseModalId = '';
   sendingForm = false;
   inventoryTypes = INVENTORY_TYPES;
+  alertButtonId = 'refresh-min-inventory-button-alert';
 
   newInventoryForm = new FormGroup({
     name: new FormControl('', [
@@ -65,6 +66,7 @@ export class CreateInventoryFormComponent {
       this.toast.success('Inventario añadido');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newInventoryForm.reset();
+      document.getElementById(this.alertButtonId)?.click();
       if (this.onSuccessSubmit) this.onSuccessSubmit();
     } catch (e) {
       this.toast.error(getErrorMessage(e));

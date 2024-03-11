@@ -53,6 +53,7 @@ export class UpdateInventoryFormComponent {
   });
   prevForm = this.updateInventoryForm.value;
   btnCloseModalId = '';
+  alertButtonId = 'refresh-min-inventory-button-alert';
   sendingForm = false;
 
   constructor(
@@ -94,6 +95,7 @@ export class UpdateInventoryFormComponent {
         this.updateInventoryForm.value
       );
       clickCloseBtnModal(this.btnCloseModalId);
+      document.getElementById(this.alertButtonId)?.click();
       if (this.onSuccessSubmit) this.onSuccessSubmit();
       this.toast.success('Inventario actualizado');
     } catch (e) {
