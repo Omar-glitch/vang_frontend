@@ -18,6 +18,7 @@ import { BuyInventoryFormComponent } from '../../components/forms/buy-inventory-
 import { SearchInputComponent } from '../../components/inputs/search-input/search-input.component';
 import { RemoveFilterButtonComponent } from '../../components/inputs/remove-filter-button/remove-filter-button.component';
 import { InventoryFilterModalComponent } from '../../components/modals/inventory-filter-modal/inventory-filter-modal.component';
+import { objectIdToInputDate } from '../../utils/texts';
 
 @Component({
   selector: 'app-inventories-page',
@@ -54,6 +55,8 @@ export class InventoriesPageComponent {
     private route: ActivatedRoute,
     private inventoryService: InventoryService
   ) {}
+
+  objectIdDate = objectIdToInputDate;
 
   copyText = (str: string) => {
     copy(str);

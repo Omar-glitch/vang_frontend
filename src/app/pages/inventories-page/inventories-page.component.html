@@ -122,6 +122,7 @@
           >
             <tr>
               <th scope="col" class="hidden px-4 py-3">ID</th>
+              <th scope="col" class="px-4 py-3">Fecha</th>
               <th scope="col" class="px-4 py-3">Nombre</th>
               <th scope="col" class="px-4 py-3">Descripción</th>
               <th scope="col" class="px-4 py-3">Tipo</th>
@@ -147,6 +148,7 @@
                   {{ inventory._id }}
                 </p>
               </th>
+              <td class="px-4 py-3">{{ objectIdDate(inventory._id) }}</td>
               <td class="px-4 py-3">{{ inventory.name }}</td>
               <td class="px-4 py-3">{{ inventory.description }}</td>
               <td class="px-4 py-3">{{ inventory.type }}</td>

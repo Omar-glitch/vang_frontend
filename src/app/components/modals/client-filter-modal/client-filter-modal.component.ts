@@ -14,6 +14,8 @@ export class ClientFilterModalComponent {
   btnCloseModalId = '';
 
   clientFilterForm = new FormGroup({
+    minDate: new FormControl(''),
+    maxDate: new FormControl(''),
     order: new FormControl(''),
   });
 
