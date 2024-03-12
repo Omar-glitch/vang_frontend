@@ -30,6 +30,7 @@ export class CreateRepairFormComponent {
   sendingForm = false;
   repairTypes = REPAIR_TYPES;
   repairStatus = REPAIR_STATUS;
+  alertButtonId = 'refresh-min-inventory-button-alert';
 
   inventories: InventoryModel[] = [];
   employees: EmployeeModel[] = [];
@@ -96,6 +97,7 @@ export class CreateRepairFormComponent {
       this.toast.success('Reparación añadida');
       clickCloseBtnModal(this.btnCloseModalId);
       this.newRepairForm.reset();
+      document.getElementById(this.alertButtonId)?.click();
       if (this.onSuccessSubmit) this.onSuccessSubmit();
     } catch (e) {
       this.toast.error(getErrorMessage(e));
